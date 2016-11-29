@@ -2,54 +2,64 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
+
 
 namespace TopDownShooter
 {
-    public class SpriteManager
+    public abstract class SpriteManager
     {
         protected Texture2D Texture;
         public Vector2 Position = Vector2.Zero;
-        public Color Color = Color.White;
-        public Vector2 Origin;
-        public float Rotation = 0f;
-        public float Scale = 1f;
-        public SpriteEffects SpriteEffect;
-
-        protected Dictionary<string, Rectangle[]> Animations =
-            new Dictionary<string, Rectangle[]>();
+        protected Dictionary<string, AnimationClass> Animations =
+            new Dictionary<string, AnimationClass>();
         protected int FrameIndex = 0;
-        public string Animation;
+        private string animation;
+        public string Animation
+        {
+            get { return animation; }
+            set
+            {
+                animation = value;
+                FrameIndex = 0;
+            }
+        }
+        protected Vector2 Origin;
 
-        protected int Frames;
         private int height;
         private int width;
 
         public SpriteManager(Texture2D Texture, int Frames, int animations)
         {
             this.Texture = Texture;
-            this.Frames = Frames;
             width = Texture.Width / Frames;
             height = Texture.Height / animations;
-        }
+            Origin = new Vector2(width / 2, height / 2);
 
-        public void AddAnimation(string name, int row)
-        {
-            Rectangle[] recs = new Rectangle[Frames];
-            for (int i = 0; i < Frames; i++)
-            {
-                recs[i] = new Rectangle(i * width,
-                    (row - 1) * height, width, height);
-            }
-            Animations.Add(name, recs);
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(Texture, Position,
-                Animations[Animation][FrameIndex],
-                Color, Rotation, Origin, Scale, SpriteEffect, 0f);
+                Animations[Animation].Rectangles[FrameIndex],
+                Animations[Animation].Color,
+                Animations[Animation].Rotation, Origin,
+                Animations[Animation].Scale,
+                Animations[Animation].SpriteEffect, 0f);
+        }
+
+        public void AddAnimation(string name, int row, int frames, AnimationClass animation)
+        {
+            Rectangle[] recs = new Rectangle[frames];
+            for (int i = 0; i < frames; i++)
+            {
+                recs[i] = new Rectangle(i * width, (row - 1) * height, width, height);
+            }
+            animation.Frames = frames;
+            animation.Rectangles = recs;
+            Animations.Add(name, animation);
         }
     }
 }
