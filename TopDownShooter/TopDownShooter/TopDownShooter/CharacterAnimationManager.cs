@@ -24,6 +24,12 @@ namespace TopDownShooter
         public float baseSpeed;
         //kolizja
         public bool collision = false;
+        //Czy jest widoczny
+        public bool isVisible = true;
+        //Czy zaatakowany
+        public bool harm = false;
+        //Ile HP
+        public int hp;
         //Odległość od gracza
         public float distance;
 

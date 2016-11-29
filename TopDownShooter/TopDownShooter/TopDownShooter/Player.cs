@@ -31,13 +31,13 @@ namespace TopDownShooter
         MouseState msState;
         MouseState prevMsState;
 
-
         public void Initialize(ContentManager content)
         {
             //playerTorsoAnimation.FramesPerSecond = 8;
             playerLegsAnimation.FramesPerSecond = 8;
-            rotation = 0;
             Content = content;
+
+            rotation = 0;
 
         }
 
@@ -77,10 +77,15 @@ namespace TopDownShooter
 
             playerLegsAnimation.AddAnimation("Idle", 2, 1, ani.Copy());
 
+
+
+
         }
 
         public void Update(GameTime gameTime)
         {
+
+
 
             MouseState Ms = Mouse.GetState();
             Vector2 mouse_pos = new Vector2(Ms.X, Ms.Y);//Pozycja myszy(x,y)
@@ -195,7 +200,7 @@ namespace TopDownShooter
             }
 
 
-            //Strzelanie po naciśnieciu lewego przycisku myszki
+
             msState = Mouse.GetState();
 
             if (msState.LeftButton == ButtonState.Pressed && prevMsState.LeftButton == ButtonState.Released)
@@ -241,7 +246,6 @@ namespace TopDownShooter
             if (bullets.Count < 20)
                 bullets.Add(newBullet);
         }
-
 
         public void Draw(SpriteBatch spriteBatch)
         {

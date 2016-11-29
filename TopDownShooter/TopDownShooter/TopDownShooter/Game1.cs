@@ -53,6 +53,17 @@ namespace TopDownShooter
                 this.Exit();
             player.Update(gameTime);
             zombie.Update(gameTime,player.playerPosition);
+
+            //Sprawdzanie czy zombie koliduje z kulami
+            for (int i = 0; i < player.bullets.Count; i++)
+            {
+                if (zombie.boundingBox.Intersects(player.bullets[i].boundingBox))
+                {
+                    player.bullets.ElementAt(i).isVisible = false;
+                    zombie.DecreaseHP(50);
+                }
+            }
+
             base.Update(gameTime);
         }
 
