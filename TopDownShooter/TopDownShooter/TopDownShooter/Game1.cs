@@ -18,6 +18,7 @@ namespace TopDownShooter
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        SpriteManager loading;
 
         public Game1()
         {
@@ -46,6 +47,9 @@ namespace TopDownShooter
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
+
+            loading = new SpriteManager(Content.Load<Texture2D>("LoadingCircle"), 8);
+            loading.Position = new Vector2(100, 100);
 
             // TODO: use this.Content to load your game content here
         }
@@ -81,9 +85,11 @@ namespace TopDownShooter
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.Black);
 
-            // TODO: Add your drawing code here
+            spriteBatch.Begin();
+            loading.Draw(spriteBatch);
+            spriteBatch.End();
 
             base.Draw(gameTime);
         }
