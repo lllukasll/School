@@ -4,14 +4,14 @@ namespace TopDownShooter
 {
     class FrameAnimation : SpriteManager
     {
-        public FrameAnimation(Texture2D Texture, int frames)
-            : base(Texture, frames)
+        public FrameAnimation(Texture2D Texture, int frames, int animations)
+            : base(Texture, frames, animations)
         {
         }
 
         public void SetFrame(int frame)
         {
-            if (frame < Rectangles.Length)
+            if (frame < Frames)
                 FrameIndex = frame;
         }
     }

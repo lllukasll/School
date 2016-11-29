@@ -19,8 +19,8 @@ namespace TopDownShooter
             set { timeToUpdate = (1f / value); }
         }
 
-        public SpriteAnimation(Texture2D Texture, int frames)
-            : base(Texture, frames)
+        public SpriteAnimation(Texture2D Texture, int frames, int animations)
+            : base(Texture, frames, animations)
         {
         }
 
@@ -33,7 +33,7 @@ namespace TopDownShooter
             {
                 timeElapsed -= timeToUpdate;
 
-                if (FrameIndex < Rectangles.Length - 1)
+                if (FrameIndex < Frames - 1)
                     FrameIndex++;
                 else if (IsLooping)
                     FrameIndex = 0;
