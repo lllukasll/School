@@ -17,6 +17,7 @@ namespace TopDownShooter
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         Player player = new Player();
+        Zombie zombie = new Zombie();
 
         public Game1()
         {
@@ -29,6 +30,7 @@ namespace TopDownShooter
         {
             base.Initialize();
             player.Initialize();
+            zombie.Initialize(new Vector2(200, 200), 1);
             this.IsMouseVisible = true;
         }
 
@@ -36,6 +38,7 @@ namespace TopDownShooter
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
             player.LoadContent(Content);
+            zombie.LoadContent(Content);
 
         }
 
@@ -49,7 +52,7 @@ namespace TopDownShooter
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
             player.Update(gameTime);
-
+            zombie.Update(gameTime,player.playerPosition);
             base.Update(gameTime);
         }
 
@@ -58,6 +61,7 @@ namespace TopDownShooter
             GraphicsDevice.Clear(Color.CornflowerBlue);
             spriteBatch.Begin();
             player.Draw(spriteBatch);
+            zombie.Draw(spriteBatch);
             spriteBatch.End();
             base.Draw(gameTime);
         }
