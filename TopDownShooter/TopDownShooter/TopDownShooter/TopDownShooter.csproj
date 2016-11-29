@@ -74,6 +74,7 @@
   <ItemGroup>
     <Compile Include="AnimationClass.cs" />
     <Compile Include="FrameAnimation.cs" />
+    <Compile Include="Player.cs" />
     <Compile Include="SpriteAnimation.cs" />
     <Compile Include="SpriteManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
