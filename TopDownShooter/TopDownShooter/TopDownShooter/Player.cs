@@ -31,6 +31,13 @@ namespace TopDownShooter
         MouseState msState;
         MouseState prevMsState;
 
+        //HP
+        Texture2D hpBarTexture;
+        Texture2D hpTextutre;
+        Vector2 hpPosition;
+        int maxHp;
+        Vector2 hpScale;
+
         public void Initialize(ContentManager content)
         {
             //playerTorsoAnimation.FramesPerSecond = 8;
@@ -39,10 +46,21 @@ namespace TopDownShooter
 
             rotation = 0;
 
+            //HP
+            maxHp = 150;
+            hpPosition = new Vector2(10, 10);
+            hpScale.X = 15;
+            hpScale.Y = 1;
+
+
         }
 
         public void LoadContent(ContentManager Content)
         {
+            //HP
+            hpBarTexture = Content.Load<Texture2D>("hpBar");
+            hpTextutre = Content.Load<Texture2D>("hp");
+
 
             //Animacja Gracza
             Texture2D legsTexture = Content.Load<Texture2D>("PlayerLegsAnimation");
@@ -200,6 +218,9 @@ namespace TopDownShooter
             }
 
 
+            //HP Test
+            if (kbState.IsKeyDown(Keys.P) && hpScale.X > 0)
+                hpScale.X -= 1;
 
             msState = Mouse.GetState();
 
@@ -249,6 +270,11 @@ namespace TopDownShooter
 
         public void Draw(SpriteBatch spriteBatch)
         {
+            //Hp
+            spriteBatch.Draw(hpTextutre, hpPosition, null, Color.White, 0, Vector2.Zero,
+                hpScale, SpriteEffects.None, 0);
+            spriteBatch.Draw(hpBarTexture, hpPosition, Color.White);
+
 
 
             //Rysuje nogi

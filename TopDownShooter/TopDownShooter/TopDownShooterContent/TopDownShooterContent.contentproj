@@ -42,13 +42,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ZombieAnimations.png">
-      <Name>ZombieAnimations</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Bullet.png">
       <Name>Bullet</Name>
       <Importer>TextureImporter</Importer>
@@ -58,6 +51,20 @@
   <ItemGroup>
     <Compile Include="ZombieAnimations2.png">
       <Name>ZombieAnimations2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="hp.png">
+      <Name>hp</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="hpBar.png">
+      <Name>hpBar</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
