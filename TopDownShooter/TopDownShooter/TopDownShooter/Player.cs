@@ -24,13 +24,20 @@ namespace TopDownShooter
         float rotation;
         public Vector2 playerPosition;
 
+        ContentManager Content;
 
-        public void Initialize()
+        //Bullets
+        public List<Bullets> bullets = new List<Bullets>();
+        MouseState msState;
+        MouseState prevMsState;
+
+
+        public void Initialize(ContentManager content)
         {
             //playerTorsoAnimation.FramesPerSecond = 8;
             playerLegsAnimation.FramesPerSecond = 8;
             rotation = 0;
-
+            Content = content;
 
         }
 
@@ -187,8 +194,52 @@ namespace TopDownShooter
                     playerLegsAnimation.Animation = "Idle";
             }
 
+
+            //Strzelanie po naciśnieciu lewego przycisku myszki
+            msState = Mouse.GetState();
+
+            if (msState.LeftButton == ButtonState.Pressed && prevMsState.LeftButton == ButtonState.Released)
+                Shoot();
+
+            prevMsState = msState;
+
+            UpdateBullets();
             playerPosition = playerLegsAnimation.Position;
             playerLegsAnimation.Update(gameTime);
+        }
+
+        //Bullets metod
+        public void UpdateBullets()
+        {
+            foreach (Bullets bullet in bullets)
+            {
+                bullet.boundingBox = new Rectangle((int)bullet.position.X, (int)bullet.position.Y,
+                    bullet.texture.Width, bullet.texture.Height);
+
+                bullet.position += bullet.velocity;
+                if (Vector2.Distance(bullet.position, playerLegsAnimation.Position) > 500)
+                    bullet.isVisible = false;
+            }
+            for (int i = 0; i < bullets.Count; i++)
+            {
+                if (!bullets[i].isVisible)
+                {
+                    bullets.RemoveAt(i);
+                    i--;
+                }
+
+            }
+        }
+
+        public void Shoot()
+        {
+            Bullets newBullet = new Bullets(Content.Load<Texture2D>("Bullet"));
+            newBullet.velocity = new Vector2((float)Math.Cos(rotation), (float)Math.Sin(rotation)) * 5f;
+            newBullet.position = playerLegsAnimation.Position + newBullet.velocity * 5;
+            newBullet.isVisible = true;
+
+            if (bullets.Count < 20)
+                bullets.Add(newBullet);
         }
 
 
@@ -198,6 +249,10 @@ namespace TopDownShooter
 
             //Rysuje nogi
             playerLegsAnimation.Draw(spriteBatch);
+
+            //Bullets
+            foreach (Bullets bullet in bullets)
+                bullet.Draw(spriteBatch, rotation);
 
             //Rysuje tors
             spriteBatch.Draw(torsoTexture, playerLegsAnimation.Position, null, Color.White, rotation,

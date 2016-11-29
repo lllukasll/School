@@ -29,7 +29,7 @@ namespace TopDownShooter
         protected override void Initialize()
         {
             base.Initialize();
-            player.Initialize();
+            player.Initialize(Content);
             zombie.Initialize(new Vector2(200, 200), 1);
             this.IsMouseVisible = true;
         }
