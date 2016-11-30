@@ -88,7 +88,7 @@ namespace TopDownShooter
                         }
                         else if(field.isEmpty==true)
                         {
-                            field.AddItem(gunName + "Icon",gunName,type,quantity,maxQuantity);
+                            field.AddItem(gunName + "Icon",gunName,type,quantity,maxQuantity,itemIndex);
                             field.isEmpty = false;
                             return;
                         }

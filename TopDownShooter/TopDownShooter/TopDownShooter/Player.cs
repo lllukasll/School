@@ -358,5 +358,21 @@ namespace TopDownShooter
             delayTime = delay;
             tmpdelayTime = delayTime;
         }
+
+        public void ChooseItem(int index)
+        {
+            if(index==0)//Wybrany pistolet
+            {
+                ChangeShootingDelay(15);
+            }
+            if (index==1)//Wybrany sniper
+            {
+                ChangeShootingDelay(40);
+            }
+            if (index==2)//Wybrany machinegun
+            {
+                ChangeShootingDelay(2);
+            }
+        }
     }
 }

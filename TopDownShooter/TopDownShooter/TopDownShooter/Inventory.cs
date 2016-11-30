@@ -39,6 +39,10 @@ namespace TopDownShooter
         int maxQuantity;
         //Nazwa przedmioty
         string itemName;
+        //Index przedmoitu np. 1-Pistol; 2-Sniper, 3-Machinegun ,..., 15-Apteczka itp...
+        int itemIndex;
+        //Sprawdza czy wlasnie zmieniony zeby moc wyslac numer indexu do gracza 
+        public bool justChanged = false;
 
         public Inventory() { }
 
@@ -69,8 +73,10 @@ namespace TopDownShooter
             textureChoosen = Content.Load<Texture2D>("InventoryBorderChoosen");
         }
 
-        public void Update(GameTime gametime,ContentManager Content)
+        public void Update(GameTime gametime,ContentManager Content, Player player)
         {
+            
+
             //Jeżeli ilość przedmiotu jest wieksza od max to iloasc = max
             if (quantity > maxQuantity)
                 quantity = maxQuantity;
@@ -80,7 +86,14 @@ namespace TopDownShooter
 
             if(isChoosen)
             {
-                if(type==0)
+                if(justChanged == true)
+                {
+                    player.ChooseItem(itemIndex);
+                    justChanged = false;
+                }
+                    
+
+                if (type==0)
                 {
                     //Tutaj co się dzieje gdy typ przedmiotu = 0
                     itemInformationString = "";
@@ -96,10 +109,13 @@ namespace TopDownShooter
                 }
             }
 
+
+
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
+            
             if(isActive)
                 spriteBatch.Draw(iconTexture, position, Color.White);
             if (isChoosen)
@@ -113,7 +129,7 @@ namespace TopDownShooter
             
         }
 
-        public void AddItem(string iconName,string Name,int Type,int Quantity,int MaxQuantity)
+        public void AddItem(string iconName,string Name,int Type,int Quantity,int MaxQuantity,int ItemIndex)
         {
             icon = iconName;
             isActive = true;
@@ -121,6 +137,7 @@ namespace TopDownShooter
             type = Type;
             quantity = Quantity;
             maxQuantity = MaxQuantity;
+            itemIndex = ItemIndex;
         }
 
         public void AddQuantity(int Quantity)

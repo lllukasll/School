@@ -24,8 +24,6 @@ namespace TopDownShooter
         public void Initialize(ContentManager Content)
         {
             player.Initialize(Content);
-            Machinegun.Initialize(Content.Load<Texture2D>("Machinegun"), new Vector2(300, 300),
-                "Machinegun",1);
 
            // inventory.Initialize(new Vector2(10, 64));
         }
@@ -33,7 +31,6 @@ namespace TopDownShooter
         public void LoadContent(ContentManager Content)
         {
             player.LoadContent(Content);
-            Machinegun.LoadContent(Content);
             //inventory.LoadContent(Content);
         }
 
@@ -41,7 +38,7 @@ namespace TopDownShooter
         {
             if(start)
             {
-                item.SpawnItem("Pistol", "Pistol", new Vector2(100, 200), 1, Content, 30, 30, 1);
+                item.SpawnItem("Pistol", "Pistol", new Vector2(100, 200), 0, Content, 30, 30, 1);
                 start = false;
             }
 
@@ -50,19 +47,32 @@ namespace TopDownShooter
 
             if (kbState.IsKeyDown(Keys.D1)) //&& kbState.IsKeyUp(Keys.Q))
             {
+                inventoryManager.inventory.ElementAt(0).justChanged = true;
                 inventoryManager.inventory.ElementAt(0).isChoosen = true;
                 inventoryManager.inventory.ElementAt(1).isChoosen = false;
-                player.ChangeShootingDelay(15);
+                inventoryManager.inventory.ElementAt(2).isChoosen = false;
+                //player.ChangeShootingDelay(15);
                 //Trzeba to bedzie zrobic z foreach!!!!!!!!!!!!!
             }
             else if (kbState.IsKeyDown(Keys.D2)) //&& kbState.IsKeyUp(Keys.Q))
             {
+                inventoryManager.inventory.ElementAt(1).justChanged = true;
                 inventoryManager.inventory.ElementAt(1).isChoosen = true;
+                inventoryManager.inventory.ElementAt(2).isChoosen = false;
                 inventoryManager.inventory.ElementAt(0).isChoosen = false;
-                player.ChangeShootingDelay(5);
+                //player.ChangeShootingDelay(5);
                 //Trzeba to bedzie zrobic z foreach!!!!!!!!!!!
             }
-
+            else if (kbState.IsKeyDown(Keys.D3)) //&& kbState.IsKeyUp(Keys.Q))
+            {
+                inventoryManager.inventory.ElementAt(2).justChanged = true;
+                
+                inventoryManager.inventory.ElementAt(0).isChoosen = false;
+                inventoryManager.inventory.ElementAt(1).isChoosen = false;
+                inventoryManager.inventory.ElementAt(2).isChoosen = true;
+                //player.ChangeShootingDelay(5);
+                //Trzeba to bedzie zrobic z foreach!!!!!!!!!!!
+            }
             //Losowe położenie X i Y 
             Random rnd = new Random();
             int randX = rnd.Next(100, 400);
@@ -81,7 +91,7 @@ namespace TopDownShooter
             //Sprawdzenie czy broni jest mniej niz 2 jesli tak to dodaj je do listy
             if (item.items.Count < 2)
             {
-                item.SpawnItem("Machinegun", "Machinegun",new Vector2(randX, randY), 1,Content,70,60,1);
+                item.SpawnItem("Machinegun", "Machinegun",new Vector2(randX, randY), 2,Content,70,60,1);
                 item.SpawnItem("Sniper", "Sniper", new Vector2(randX2, randY2), 1, Content,20,20,1);
             }
 
@@ -99,7 +109,7 @@ namespace TopDownShooter
                 fatso.Update(gameTime, player.playerPosition, player);
             }
 
-            //Wykonaj polecenie Update dla każdego aktywnego fatso
+            //Wykonaj polecenie Update dla każdego aktywnego przedmiotu
             foreach (Item item in item.items)
             {
                 item.Update(gameTime, player, inventoryManager);
@@ -148,10 +158,6 @@ namespace TopDownShooter
                 }
             }
 
-            //inventory.Update(gameTime, Content);
-
-            //Machinegun.Update(gameTime, player, inventoryManager.inventory);
-
 
             //InventoryManager , jeżeli pól jes mniej niż 10 dodaj je do listy 
             if (inventoryManager.inventory.Count < 10)
@@ -159,7 +165,7 @@ namespace TopDownShooter
             //Wykonaj polecenie Update dla każdego pola w inventory
             foreach (Inventory field in inventoryManager.inventory)
             {
-                field.Update(gameTime, Content);
+                field.Update(gameTime, Content,player);
             }
 
             //Sprawdzenie czy ktoras z broni jest niewidoczny , jeśli tak to usun go z listy
@@ -176,7 +182,6 @@ namespace TopDownShooter
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            Machinegun.Draw(spriteBatch);
             player.Draw(spriteBatch);
 
             //Wyswietla wszystkie zombie
