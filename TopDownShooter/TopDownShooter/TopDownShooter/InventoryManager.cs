@@ -11,14 +11,13 @@ namespace TopDownShooter
 {
     class InventoryManager
     {
-        public List<Inventory> invetory = new List<Inventory>();
+        public List<Inventory> inventory = new List<Inventory>();
 
-        public InventoryManager()
+        public void DrawInventory(ContentManager Content,Vector2 Position)
         {
-            for(int i=0;i<=10;i++)
-            {
+            Inventory field = new Inventory(Content.Load<Texture2D>("InventoryBorder"), Position);
 
-            }
+            inventory.Add(field);
         }
     }
 }

@@ -15,6 +15,7 @@ namespace TopDownShooter
         Texture2D iconTexture;
         Vector2 position;
         bool isActive;
+        public bool isEmpty = true;
         string icon;
 
         public Inventory() { }

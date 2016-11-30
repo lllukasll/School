@@ -15,7 +15,9 @@ namespace TopDownShooter
         EnemyManager enemy = new EnemyManager();
         Gun Machinegun = new Gun();
         GunManager gun = new GunManager();
-        Inventory inventory = new Inventory();
+        //Inventory inventory = new Inventory();
+        //InventoryManager 
+        InventoryManager inventoryManager = new InventoryManager();
 
         public void Initialize(ContentManager Content)
         {
@@ -23,22 +25,27 @@ namespace TopDownShooter
             Machinegun.Initialize(Content.Load<Texture2D>("Machinegun"), new Vector2(300, 300),
                 "Machinegun");
 
-            inventory.Initialize(new Vector2(10, 64));
+           // inventory.Initialize(new Vector2(10, 64));
         }
 
         public void LoadContent(ContentManager Content)
         {
             player.LoadContent(Content);
             Machinegun.LoadContent(Content);
-            inventory.LoadContent(Content);
+            //inventory.LoadContent(Content);
         }
 
         public void Update(GameTime gameTime,ContentManager Content)
         {
+
+            
+
             //Losowe położenie X i Y 
             Random rnd = new Random();
             int randX = rnd.Next(100, 400);
             int randY = rnd.Next(100, 400);
+            int randX2 = rnd.Next(100, 400);
+            int randY2 = rnd.Next(100, 400);
 
             //Jeżeli jest mniej niż 3 zombie dodaj je do listy w losowych miejscach
             if (enemy.zombies.Count < 3)
@@ -50,7 +57,11 @@ namespace TopDownShooter
 
             //Sprawdzenie czy broni jest mniej niz 2 jesli tak to dodaj je do listy
             if (gun.guns.Count < 2)
+            {
                 gun.SpawnGun("Machinegun", "Machinegun", new Vector2(randX, randY), 1, Content);
+                gun.SpawnGun("Shotgun", "Shotgun", new Vector2(randX2, randY2), 1, Content);
+            }
+                
 
             
             player.Update(gameTime);
@@ -70,7 +81,7 @@ namespace TopDownShooter
             //Wykonaj polecenie Update dla każdego aktywnego fatso
             foreach (Gun gun in gun.guns)
             {
-                gun.Update(gameTime, player, inventory);
+                gun.Update(gameTime, player, inventoryManager);
             }
 
             for (int i = 0; i < player.bullets.Count; i++)
@@ -116,11 +127,19 @@ namespace TopDownShooter
                 }
             }
 
-            inventory.Update(gameTime, Content);
+            //inventory.Update(gameTime, Content);
 
-            Machinegun.Update(gameTime, player, inventory);
+            //Machinegun.Update(gameTime, player, inventory);
 
 
+            //InventoryManager , jeżeli pól jes mniej niż 10 dodaj je do listy 
+            if (inventoryManager.inventory.Count < 10)
+                inventoryManager.DrawInventory(Content, new Vector2(10, 64 + inventoryManager.inventory.Count * 32));
+            //Wykonaj polecenie Update dla każdego pola w inventory
+            foreach (Inventory field in inventoryManager.inventory)
+            {
+                field.Update(gameTime, Content);
+            }
 
             //Sprawdzenie czy ktoras z broni jest niewidoczny , jeśli tak to usun go z listy
             for (int i = 0; i < gun.guns.Count; i++)
@@ -154,8 +173,11 @@ namespace TopDownShooter
             {
                 gun.Draw(spriteBatch);
             }
-
-            inventory.Draw(spriteBatch);
+            foreach (Inventory field in inventoryManager.inventory)
+            {
+                field.Draw(spriteBatch);
+            }
+            //inventory.Draw(spriteBatch);
         }
     }
 }

@@ -14,6 +14,7 @@ namespace TopDownShooter
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         LevelManager levelManager = new LevelManager();
+        
 
         public Game1()
         {
@@ -43,6 +44,8 @@ namespace TopDownShooter
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
+
+            
             levelManager.Update(gameTime, Content);
             
             base.Update(gameTime);
@@ -53,6 +56,7 @@ namespace TopDownShooter
             GraphicsDevice.Clear(Color.CornflowerBlue);
             spriteBatch.Begin();
             levelManager.Draw(spriteBatch);
+           
             spriteBatch.End();
             base.Draw(gameTime);
         }

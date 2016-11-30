@@ -23,6 +23,7 @@ namespace TopDownShooter
         private string gunName;
         
         private KeyboardState kbState;
+        private KeyboardState prevkbState;
         private float stringPositionX;
 
         public Gun() { }
@@ -49,20 +50,29 @@ namespace TopDownShooter
             font = Content.Load<SpriteFont>("Gun");
         }
 
-        public void Update(GameTime gameTime,Player player,Inventory inventory)
+        public void Update(GameTime gameTime,Player player,InventoryManager inventoryManager)//Inventory inventory)
         {
             boundingBox = new Rectangle((int)position.X, (int)position.Y, texture.Width, texture.Height);
-
+            prevkbState = kbState;
             kbState = Keyboard.GetState();
 
             if(boundingBox.Intersects(player.boundingBox))
             {
                 isStringVisible = true;
-                if(kbState.IsKeyDown(Keys.E))
+                if(kbState.IsKeyDown(Keys.E) && prevkbState.IsKeyUp(Keys.E))
                 {
                     isVisible = false;
                     isStringVisible = false;
-                    inventory.AddItem(gunName + "Icon");
+                    foreach(Inventory field in inventoryManager.inventory)
+                    {
+                        if(field.isEmpty==true)
+                        {
+                            field.AddItem(gunName + "Icon");
+                            field.isEmpty = false;
+                            return;
+                        }
+                    }
+                    //inventory.AddItem(gunName + "Icon");
                 }
             }
             else
