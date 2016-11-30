@@ -15,6 +15,7 @@ namespace TopDownShooter
         SpriteBatch spriteBatch;
         Player player = new Player();
         EnemyManager enemy = new EnemyManager();
+        Gun Machinegun = new Gun();
 
         public Game1()
         {
@@ -26,6 +27,9 @@ namespace TopDownShooter
         {
             base.Initialize();
             player.Initialize(Content);
+            Machinegun.Initialize(Content.Load<Texture2D>("2h_machinegun"), new Vector2(300, 300),
+                "Machinegun");
+            
             this.IsMouseVisible = true;
         }
 
@@ -33,7 +37,8 @@ namespace TopDownShooter
         {
             
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            player.LoadContent(Content); 
+            player.LoadContent(Content);
+            Machinegun.LoadContent(Content);
         }
 
         protected override void UnloadContent()
@@ -47,9 +52,11 @@ namespace TopDownShooter
             int randX = rnd.Next(100, 400);
             int randY = rnd.Next(100, 400);
 
+            //Je¿eli jest mniej ni¿ 3 zombie dodaj je do listy w losowych miejscach
             if (enemy.zombies.Count < 3)
                 enemy.SpawnZombie(randX,randY,Content);
 
+            //Je¿eli jest mniej ni¿ 3 fatso dodaj je do listy w losowych miejscach
             if (enemy.fatsos.Count < 2)
                 enemy.SpawnFatso(randX, randY, Content);
 
@@ -57,12 +64,13 @@ namespace TopDownShooter
                 this.Exit();
             player.Update(gameTime);
 
-            //fatso.Update(gameTime, player.playerPosition,player);
-
+            //Wykonaj polecenie Update dla ka¿dego aktywnego zombie
             foreach (Enemy zombie in enemy.zombies)
             {
                 zombie.Update(gameTime, player.playerPosition, player);
             }
+
+            //Wykonaj polecenie Update dla ka¿dego aktywnego fatso
             foreach (Enemy fatso in enemy.fatsos)
             {
                 fatso.Update(gameTime, player.playerPosition, player);
@@ -91,7 +99,7 @@ namespace TopDownShooter
             }
 
             
-
+            //Sprawdzenie czy ktorys z zombie jest niewidoczny , jeœli tak to usun go z listy
             for (int i = 0; i < enemy.zombies.Count; i++)
             {
                 if (!enemy.zombies[i].isVisible)
@@ -101,6 +109,7 @@ namespace TopDownShooter
                 }
             }
 
+            //Sprawdzenie czy ktorys z fatso jest niewidoczny , jeœli tak to usun go z listy
             for (int i = 0; i < enemy.fatsos.Count; i++)
             {
                 if (!enemy.fatsos[i].isVisible)
@@ -110,6 +119,8 @@ namespace TopDownShooter
                 }
             }
 
+            Machinegun.Update(gameTime, player);
+
             base.Update(gameTime);
         }
 
@@ -117,20 +128,24 @@ namespace TopDownShooter
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
             spriteBatch.Begin();
+            Machinegun.Draw(spriteBatch);
             player.Draw(spriteBatch);
             //zombie.Draw(spriteBatch);
             //fatso.Draw(spriteBatch);
             
+            //Wyswietla wszystkie zombie
             foreach (Enemy zombie in enemy.zombies)
             {
                 zombie.Draw(spriteBatch);
             }
 
+            //Wyswietla wszystkie fatso
             foreach (Enemy fatso in enemy.fatsos)
             {
                 fatso.Draw(spriteBatch);
             }
 
+            
             spriteBatch.End();
             base.Draw(gameTime);
         }
