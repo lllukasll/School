@@ -18,6 +18,7 @@ namespace TopDownShooter
         //Inventory inventory = new Inventory();
         //InventoryManager 
         InventoryManager inventoryManager = new InventoryManager();
+        KeyboardState kbState,prevKbState;
 
         public void Initialize(ContentManager Content)
         {
@@ -38,7 +39,22 @@ namespace TopDownShooter
         public void Update(GameTime gameTime,ContentManager Content)
         {
 
-            
+            prevKbState = kbState;
+            kbState = Keyboard.GetState();
+
+            if (kbState.IsKeyDown(Keys.D1)) //&& kbState.IsKeyUp(Keys.Q))
+            {
+                inventoryManager.inventory.ElementAt(0).isChoosen = true;
+                inventoryManager.inventory.ElementAt(1).isChoosen = false;
+
+                //Trzeba to bedzie zrobic z foreach!!!!!!!!!!!!!
+            }
+            else if (kbState.IsKeyDown(Keys.D2)) //&& kbState.IsKeyUp(Keys.Q))
+            {
+                inventoryManager.inventory.ElementAt(1).isChoosen = true;
+                inventoryManager.inventory.ElementAt(0).isChoosen = false;
+                //Trzeba to bedzie zrobic z foreach!!!!!!!!!!!
+            }
 
             //Losowe położenie X i Y 
             Random rnd = new Random();
@@ -150,6 +166,7 @@ namespace TopDownShooter
                     i--;
                 }
             }
+
         }
 
         public void Draw(SpriteBatch spriteBatch)

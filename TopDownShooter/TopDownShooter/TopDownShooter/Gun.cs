@@ -50,7 +50,7 @@ namespace TopDownShooter
             font = Content.Load<SpriteFont>("Gun");
         }
 
-        public void Update(GameTime gameTime,Player player,InventoryManager inventoryManager)//Inventory inventory)
+        public void Update(GameTime gameTime,Player player,InventoryManager inventoryManager)
         {
             boundingBox = new Rectangle((int)position.X, (int)position.Y, texture.Width, texture.Height);
             prevkbState = kbState;
@@ -65,14 +65,19 @@ namespace TopDownShooter
                     isStringVisible = false;
                     foreach(Inventory field in inventoryManager.inventory)
                     {
-                        if(field.isEmpty==true)
+                        if(field.isEmpty==false && field.icon == gunName +"Icon")
                         {
-                            field.AddItem(gunName + "Icon");
+                            //Tutaj jest miejsce na dodawanie amunicji gdy podniesie się broń , ktora
+                            //juz jest w ekwipunku
+                            return;
+                        }
+                        else if(field.isEmpty==true)
+                        {
+                            field.AddItem(gunName + "Icon",gunName);
                             field.isEmpty = false;
                             return;
                         }
                     }
-                    //inventory.AddItem(gunName + "Icon");
                 }
             }
             else
