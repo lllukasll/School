@@ -13,18 +13,19 @@ namespace TopDownShooter
     {
         Player player = new Player();
         EnemyManager enemy = new EnemyManager();
-        Gun Machinegun = new Gun();
-        GunManager gun = new GunManager();
+        Item Machinegun = new Item();
+        ItemManager item = new ItemManager();
         //Inventory inventory = new Inventory();
         //InventoryManager 
         InventoryManager inventoryManager = new InventoryManager();
         KeyboardState kbState,prevKbState;
+        bool start = true;
 
         public void Initialize(ContentManager Content)
         {
             player.Initialize(Content);
             Machinegun.Initialize(Content.Load<Texture2D>("Machinegun"), new Vector2(300, 300),
-                "Machinegun");
+                "Machinegun",1);
 
            // inventory.Initialize(new Vector2(10, 64));
         }
@@ -38,6 +39,11 @@ namespace TopDownShooter
 
         public void Update(GameTime gameTime,ContentManager Content)
         {
+            if(start)
+            {
+                item.SpawnItem("Pistol", "Pistol", new Vector2(100, 200), 1, Content, 30, 30, 1);
+                start = false;
+            }
 
             prevKbState = kbState;
             kbState = Keyboard.GetState();
@@ -46,13 +52,14 @@ namespace TopDownShooter
             {
                 inventoryManager.inventory.ElementAt(0).isChoosen = true;
                 inventoryManager.inventory.ElementAt(1).isChoosen = false;
-
+                player.ChangeShootingDelay(15);
                 //Trzeba to bedzie zrobic z foreach!!!!!!!!!!!!!
             }
             else if (kbState.IsKeyDown(Keys.D2)) //&& kbState.IsKeyUp(Keys.Q))
             {
                 inventoryManager.inventory.ElementAt(1).isChoosen = true;
                 inventoryManager.inventory.ElementAt(0).isChoosen = false;
+                player.ChangeShootingDelay(5);
                 //Trzeba to bedzie zrobic z foreach!!!!!!!!!!!
             }
 
@@ -72,15 +79,13 @@ namespace TopDownShooter
                 enemy.SpawnFatso(randX, randY, Content);
 
             //Sprawdzenie czy broni jest mniej niz 2 jesli tak to dodaj je do listy
-            if (gun.guns.Count < 2)
+            if (item.items.Count < 2)
             {
-                gun.SpawnGun("Machinegun", "Machinegun", new Vector2(randX, randY), 1, Content);
-                gun.SpawnGun("Shotgun", "Shotgun", new Vector2(randX2, randY2), 1, Content);
+                item.SpawnItem("Machinegun", "Machinegun",new Vector2(randX, randY), 1,Content,70,60,1);
+                item.SpawnItem("Sniper", "Sniper", new Vector2(randX2, randY2), 1, Content,20,20,1);
             }
-                
 
-            
-            player.Update(gameTime);
+            player.Update(gameTime,inventoryManager);
 
             //Wykonaj polecenie Update dla każdego aktywnego zombie
             foreach (Enemy zombie in enemy.zombies)
@@ -95,9 +100,9 @@ namespace TopDownShooter
             }
 
             //Wykonaj polecenie Update dla każdego aktywnego fatso
-            foreach (Gun gun in gun.guns)
+            foreach (Item item in item.items)
             {
-                gun.Update(gameTime, player, inventoryManager);
+                item.Update(gameTime, player, inventoryManager);
             }
 
             for (int i = 0; i < player.bullets.Count; i++)
@@ -145,7 +150,7 @@ namespace TopDownShooter
 
             //inventory.Update(gameTime, Content);
 
-            //Machinegun.Update(gameTime, player, inventory);
+            //Machinegun.Update(gameTime, player, inventoryManager.inventory);
 
 
             //InventoryManager , jeżeli pól jes mniej niż 10 dodaj je do listy 
@@ -158,11 +163,11 @@ namespace TopDownShooter
             }
 
             //Sprawdzenie czy ktoras z broni jest niewidoczny , jeśli tak to usun go z listy
-            for (int i = 0; i < gun.guns.Count; i++)
+            for (int i = 0; i < item.items.Count; i++)
             {
-                if (!gun.guns[i].isVisible)
+                if (!item.items[i].isVisible)
                 {
-                    gun.guns.RemoveAt(i);
+                    item.items.RemoveAt(i);
                     i--;
                 }
             }
@@ -186,9 +191,9 @@ namespace TopDownShooter
                 fatso.Draw(spriteBatch);
             }
 
-            foreach (Gun gun in gun.guns)
+            foreach (Item item in item.items)
             {
-                gun.Draw(spriteBatch);
+                item.Draw(spriteBatch);
             }
             foreach (Inventory field in inventoryManager.inventory)
             {

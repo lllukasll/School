@@ -9,11 +9,14 @@ using Microsoft.Xna.Framework.Content;
 
 namespace TopDownShooter
 {
-    class Gun
+    class Item
     {
+        //Tekstura przedmiotu
         public Texture2D texture;
+        //Pozycja przedmiotu
         public Vector2 position;
-        public int gunIndex;
+        //Index przedmiotu
+        public int itemIndex;
         public bool isVisible = true;
 
         public Rectangle boundingBox;
@@ -26,23 +29,34 @@ namespace TopDownShooter
         private KeyboardState prevkbState;
         private float stringPositionX;
 
-        public Gun() { }
+        //Typ przedmiotu 0-Puste | 1-Bron | 2-Apteczka itp.
+        private int type;
+        //Ile go wysyłam
+        private int quantity;
+        //Maksymalna ilosc tego przedmiotu
+        private int maxQuantity;
 
-        public Gun(Texture2D Texture, Vector2 Position, string Text, int GunIndex,ContentManager Content)
+        public Item() { }
+
+        public Item(Texture2D Texture, Vector2 Position, string Text, int ItemIndex,int Type,int Quantity, int MaxQuantity,ContentManager Content)
         {
             texture = Texture;
             position = Position;
             text = "Aby podniesc " + Text + " nacisnij E";
-            gunIndex = GunIndex;
+            itemIndex = ItemIndex;
             font = Content.Load<SpriteFont>("Gun");
             gunName = Text;
+            type = Type;
+            quantity = Quantity;
+            maxQuantity = MaxQuantity;
         }
-        public void Initialize(Texture2D Texture, Vector2 Position, string Text)
+        public void Initialize(Texture2D Texture, Vector2 Position, string Text, int Type)
         {
             texture = Texture;
             position = Position;
             text = "Aby podniesc " + Text + " nacisnij E";
             gunName = Text;
+            type = Type;
         }
 
         public void LoadContent(ContentManager Content)
@@ -69,11 +83,12 @@ namespace TopDownShooter
                         {
                             //Tutaj jest miejsce na dodawanie amunicji gdy podniesie się broń , ktora
                             //juz jest w ekwipunku
+                            field.AddQuantity(quantity);
                             return;
                         }
                         else if(field.isEmpty==true)
                         {
-                            field.AddItem(gunName + "Icon",gunName);
+                            field.AddItem(gunName + "Icon",gunName,type,quantity,maxQuantity);
                             field.isEmpty = false;
                             return;
                         }

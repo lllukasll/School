@@ -105,15 +105,15 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Shotgun.png">
-      <Name>Shotgun</Name>
+    <Compile Include="Sniper.png">
+      <Name>Sniper</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ShotgunIcon.png">
-      <Name>ShotgunIcon</Name>
+    <Compile Include="SniperIcon.png">
+      <Name>SniperIcon</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
@@ -123,6 +123,27 @@
       <Name>ItemInformation</Name>
       <Importer>FontDescriptionImporter</Importer>
       <Processor>FontDescriptionProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="InventoryBorderChoosen.png">
+      <Name>InventoryBorderChoosen</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Pistol.png">
+      <Name>Pistol</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="PistolIcon.png">
+      <Name>PistolIcon</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />

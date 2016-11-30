@@ -33,6 +33,13 @@ namespace TopDownShooter
         //Wysokość i szerokość gracza
         int playerWidth = 64, playerHeight = 64;
 
+        //Czas delayu miedzy strzalami
+        int delayTime;
+        //Tymczasowa zmienna przechowujaca delayTime
+        int tmpdelayTime;
+        //Sprawdzenie czy gracz atrzelil
+        bool isShooting;
+
         ContentManager Content;
 
         //Bullets
@@ -59,7 +66,8 @@ namespace TopDownShooter
             hpPosition = new Vector2(10, 10);
             hpScale.X = 15;
             hpScale.Y = 1;
-
+            delayTime = 15;
+            tmpdelayTime = delayTime;
 
         }
 
@@ -108,7 +116,7 @@ namespace TopDownShooter
 
         }
 
-        public void Update(GameTime gameTime)
+        public void Update(GameTime gameTime,InventoryManager inventoryManager)
         {
 
             //BoundingBox aktualizacja
@@ -236,9 +244,41 @@ namespace TopDownShooter
             //Strzelanie
             msState = Mouse.GetState();
 
-            if (msState.LeftButton == ButtonState.Pressed && prevMsState.LeftButton == ButtonState.Released)
-                Shoot();
-
+            if (msState.LeftButton == ButtonState.Pressed && prevMsState.LeftButton == ButtonState.Released && isShooting == false )
+            {
+                foreach(Inventory field in inventoryManager.inventory)
+                {
+                    if(field.isChoosen)
+                    {
+                        if(field.quantity > 0)
+                        {
+                            field.SubtractQuantity();
+                            Shoot();
+                        }
+                        
+                    }
+                }
+                
+                isShooting = true;
+            }
+                
+            if(isShooting)
+            {
+                if(tmpdelayTime==delayTime)
+                {
+                    tmpdelayTime--;
+                    
+                }
+                else
+                {
+                    tmpdelayTime--;
+                    if(tmpdelayTime==0)
+                    {
+                        isShooting = false;
+                        tmpdelayTime = delayTime;
+                    }
+                }
+            }
             prevMsState = msState;
 
             UpdateBullets();
@@ -311,6 +351,12 @@ namespace TopDownShooter
         public void IncreaseHp(int ammountToDecrease)
         {
             Hp += ammountToDecrease;
+        }
+
+        public void ChangeShootingDelay(int delay)
+        {
+            delayTime = delay;
+            tmpdelayTime = delayTime;
         }
     }
 }

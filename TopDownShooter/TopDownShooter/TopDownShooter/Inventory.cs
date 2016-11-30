@@ -13,6 +13,8 @@ namespace TopDownShooter
     {
         //Textura obramowania
         Texture2D texture;
+        //Textura obramowania gdy wybrane
+        Texture2D textureChoosen;
         //textura ikony
         Texture2D iconTexture;
         //Pozycja pola
@@ -32,7 +34,7 @@ namespace TopDownShooter
         //Napis jak wyzej
         string itemInformationString;
         //Aktualna ilosc 
-        int quantity;
+        public int quantity;
         //Maxymalna ilosc
         int maxQuantity;
         //Nazwa przedmioty
@@ -41,16 +43,17 @@ namespace TopDownShooter
         public Inventory() { }
 
         //Konstruktor
-        public Inventory(Texture2D Texture, Vector2 Position,SpriteFont itemInformationFont)
+        public Inventory(Texture2D Texture,Texture2D TextureChoosen, Vector2 Position,SpriteFont itemInformationFont)
         {
             texture = Texture;
             position = Position;
             isActive = false;
             font = itemInformationFont;
             isChoosen = false;
-            type = 1;
+            type = 0;
             quantity = 0; // Do dokonczenia
             maxQuantity = 0; // Do dokonczenia
+            textureChoosen = TextureChoosen;
         }
 
         public void Initialize(Vector2 Position)
@@ -63,10 +66,15 @@ namespace TopDownShooter
         {
             texture = Content.Load<Texture2D>("InventoryBorder");
             font = Content.Load<SpriteFont>("ItemInformation");
+            textureChoosen = Content.Load<Texture2D>("InventoryBorderChoosen");
         }
 
         public void Update(GameTime gametime,ContentManager Content)
         {
+            //Jeżeli ilość przedmiotu jest wieksza od max to iloasc = max
+            if (quantity > maxQuantity)
+                quantity = maxQuantity;
+
             if (isActive)
                 iconTexture = Content.Load<Texture2D>(icon);
 
@@ -84,7 +92,7 @@ namespace TopDownShooter
                 }else if (type == 2)
                 {
                     //Tutaj co się dzieje gdy typ przedmiotu = 2
-                    //itemInformationString = icon + " | Ilosc : ";
+                    itemInformationString = icon + " | Ilosc : ";
                 }
             }
 
@@ -95,15 +103,34 @@ namespace TopDownShooter
             if(isActive)
                 spriteBatch.Draw(iconTexture, position, Color.White);
             if (isChoosen)
+            {
                 spriteBatch.DrawString(font, itemInformationString, new Vector2(10, 40), Color.White);
-            spriteBatch.Draw(texture, position, Color.White);
+                spriteBatch.Draw(textureChoosen, position, Color.White);
+            }else
+            {
+                spriteBatch.Draw(texture, position, Color.White);
+            }
+            
         }
 
-        public void AddItem(string iconName,string Name)
+        public void AddItem(string iconName,string Name,int Type,int Quantity,int MaxQuantity)
         {
             icon = iconName;
             isActive = true;
             itemName = Name;
+            type = Type;
+            quantity = Quantity;
+            maxQuantity = MaxQuantity;
+        }
+
+        public void AddQuantity(int Quantity)
+        {
+            quantity += Quantity;
+        }
+
+        public void SubtractQuantity()
+        {
+            quantity--;
         }
     }
 }

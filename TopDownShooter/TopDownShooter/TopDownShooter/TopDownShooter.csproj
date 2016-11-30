@@ -77,8 +77,8 @@
     <Compile Include="CharacterAnimationManager.cs" />
     <Compile Include="EnemyManager.cs" />
     <Compile Include="FrameAnimation.cs" />
-    <Compile Include="Gun.cs" />
-    <Compile Include="GunManager.cs" />
+    <Compile Include="Item.cs" />
+    <Compile Include="ItemManager.cs" />
     <Compile Include="Inventory.cs" />
     <Compile Include="InventoryManager.cs" />
     <Compile Include="LevelManager.cs" />
