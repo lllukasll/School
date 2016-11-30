@@ -84,8 +84,22 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="2h_machinegun.png">
-      <Name>2h_machinegun</Name>
+    <Compile Include="Machinegun.png">
+      <Name>Machinegun</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="InventoryBorder.png">
+      <Name>InventoryBorder</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="MachinegunIcon.png">
+      <Name>MachinegunIcon</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

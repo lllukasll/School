@@ -20,6 +20,7 @@ namespace TopDownShooter
         private string text;
         private SpriteFont font;
         private bool isStringVisible = false;
+        private string gunName;
         
         private KeyboardState kbState;
         private float stringPositionX;
@@ -33,12 +34,14 @@ namespace TopDownShooter
             text = "Aby podniesc " + Text + " nacisnij E";
             gunIndex = GunIndex;
             font = Content.Load<SpriteFont>("Gun");
+            gunName = Text;
         }
         public void Initialize(Texture2D Texture, Vector2 Position, string Text)
         {
             texture = Texture;
             position = Position;
             text = "Aby podniesc " + Text + " nacisnij E";
+            gunName = Text;
         }
 
         public void LoadContent(ContentManager Content)
@@ -46,7 +49,7 @@ namespace TopDownShooter
             font = Content.Load<SpriteFont>("Gun");
         }
 
-        public void Update(GameTime gameTime,Player player)
+        public void Update(GameTime gameTime,Player player,Inventory inventory)
         {
             boundingBox = new Rectangle((int)position.X, (int)position.Y, texture.Width, texture.Height);
 
@@ -58,7 +61,9 @@ namespace TopDownShooter
                 if(kbState.IsKeyDown(Keys.E))
                 {
                     isVisible = false;
-                    isStringVisible = false;                }
+                    isStringVisible = false;
+                    inventory.AddItem(gunName + "Icon");
+                }
             }
             else
             {

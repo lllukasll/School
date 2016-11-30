@@ -17,6 +17,7 @@ namespace TopDownShooter
         EnemyManager enemy = new EnemyManager();
         Gun Machinegun = new Gun();
         GunManager gun = new GunManager();
+        Inventory inventory = new Inventory();
 
 
         public Game1()
@@ -29,9 +30,11 @@ namespace TopDownShooter
         {
             base.Initialize();
             player.Initialize(Content);
-            Machinegun.Initialize(Content.Load<Texture2D>("2h_machinegun"), new Vector2(300, 300),
+            Machinegun.Initialize(Content.Load<Texture2D>("Machinegun"), new Vector2(300, 300),
                 "Machinegun");
-            
+
+            inventory.Initialize(new Vector2(10, 64));
+
             this.IsMouseVisible = true;
         }
 
@@ -41,6 +44,7 @@ namespace TopDownShooter
             spriteBatch = new SpriteBatch(GraphicsDevice);
             player.LoadContent(Content);
             Machinegun.LoadContent(Content);
+            inventory.LoadContent(Content);
         }
 
         protected override void UnloadContent()
@@ -64,7 +68,7 @@ namespace TopDownShooter
 
             //Sprawdzenie czy broni jest mniej niz 2 jesli tak to dodaj je do listy
             if (gun.guns.Count < 2)
-                gun.SpawnGun("2h_machinegun", "Machinegun", new Vector2(randX, randY), 1, Content);
+                gun.SpawnGun("Machinegun", "Machinegun", new Vector2(randX, randY), 1, Content);
 
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
@@ -85,7 +89,7 @@ namespace TopDownShooter
             //Wykonaj polecenie Update dla ka¿dego aktywnego fatso
             foreach (Gun gun in gun.guns)
             {
-                gun.Update(gameTime,player);
+                gun.Update(gameTime,player,inventory);
             }
 
             for (int i = 0; i < player.bullets.Count; i++)
@@ -131,7 +135,9 @@ namespace TopDownShooter
                 }
             }
 
-            Machinegun.Update(gameTime, player);
+            inventory.Update(gameTime, Content);
+
+            Machinegun.Update(gameTime, player,inventory);
 
             
 
@@ -174,7 +180,7 @@ namespace TopDownShooter
                 gun.Draw(spriteBatch);
             }
 
-
+            inventory.Draw(spriteBatch);
             spriteBatch.End();
             base.Draw(gameTime);
         }
