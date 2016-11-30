@@ -75,6 +75,7 @@
     <Compile Include="AnimationClass.cs" />
     <Compile Include="Bullets.cs" />
     <Compile Include="CharacterAnimationManager.cs" />
+    <Compile Include="EnemyManager.cs" />
     <Compile Include="FrameAnimation.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="SpriteAnimation.cs" />
@@ -82,7 +83,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Game1.cs" />
-    <Compile Include="Zombie.cs" />
+    <Compile Include="Enemy.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Game.ico" />

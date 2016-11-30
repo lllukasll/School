@@ -14,28 +14,36 @@ namespace TopDownShooter
     class Player
     {
 
+        //Kontroler animacji nog postaci
         SpriteAnimation playerLegsAnimation;
-        KeyboardState kbState;
-
-
-
-        AnimationClass ani = new AnimationClass();
+        //Textura torsu postaci
         Texture2D torsoTexture;
+        //Zmienne przetrzymujące aktualne przyciski (myszy i klawiatury)
+        KeyboardState kbState;
+        MouseState msState;
+        MouseState prevMsState;
+        //Kontroler animacji tworzący kopie aby każda animacja mogła być niezależna
+        AnimationClass ani = new AnimationClass();
+        //Zmienna przetrzymująca rotację postaci
         float rotation;
+        //Zmienna przetrzymująca aktualną pozycje gracza
         public Vector2 playerPosition;
+        //Ramka do kolizji
+        public Rectangle boundingBox;
+        //Wysokość i szerokość gracza
+        int playerWidth = 64, playerHeight = 64;
 
         ContentManager Content;
 
         //Bullets
         public List<Bullets> bullets = new List<Bullets>();
-        MouseState msState;
-        MouseState prevMsState;
+        
 
         //HP
         Texture2D hpBarTexture;
         Texture2D hpTextutre;
         Vector2 hpPosition;
-        int maxHp;
+        int Hp;
         Vector2 hpScale;
 
         public void Initialize(ContentManager content)
@@ -47,7 +55,7 @@ namespace TopDownShooter
             rotation = 0;
 
             //HP
-            maxHp = 150;
+            Hp = 150;
             hpPosition = new Vector2(10, 10);
             hpScale.X = 15;
             hpScale.Y = 1;
@@ -103,8 +111,10 @@ namespace TopDownShooter
         public void Update(GameTime gameTime)
         {
 
+            //BoundingBox aktualizacja
+            boundingBox = new Rectangle((int)playerPosition.X,(int) playerPosition.Y, playerWidth, playerHeight);
 
-
+            //Rotacja
             MouseState Ms = Mouse.GetState();
             Vector2 mouse_pos = new Vector2(Ms.X, Ms.Y);//Pozycja myszy(x,y)
             Vector2 direction = mouse_pos - playerLegsAnimation.Position;//Róznica miedzy X,Y
@@ -116,6 +126,8 @@ namespace TopDownShooter
                 direction.Normalize();
             }
 
+
+            //Poruszanie gracza
             kbState = Keyboard.GetState();
 
 
@@ -218,10 +230,10 @@ namespace TopDownShooter
             }
 
 
-            //HP Test
-            if (kbState.IsKeyDown(Keys.P) && hpScale.X > 0)
-                hpScale.X -= 1;
+            //HP
+            hpScale.X = Hp / 10;
 
+            //Strzelanie
             msState = Mouse.GetState();
 
             if (msState.LeftButton == ButtonState.Pressed && prevMsState.LeftButton == ButtonState.Released)
@@ -230,6 +242,8 @@ namespace TopDownShooter
             prevMsState = msState;
 
             UpdateBullets();
+
+            //Wyświetlanie animacji gracza
             playerPosition = playerLegsAnimation.Position;
             playerLegsAnimation.Update(gameTime);
         }
@@ -287,6 +301,16 @@ namespace TopDownShooter
             //Rysuje tors
             spriteBatch.Draw(torsoTexture, playerLegsAnimation.Position, null, Color.White, rotation,
                 new Vector2(torsoTexture.Width / 2, torsoTexture.Height / 2), 1.0f, SpriteEffects.None, 1.0f);
+        }
+
+        public void DecreaseHP(int ammountToDecrease)
+        {
+            Hp -= ammountToDecrease;
+        }
+
+        public void IncreaseHp(int ammountToDecrease)
+        {
+            Hp += ammountToDecrease;
         }
     }
 }

@@ -32,6 +32,8 @@ namespace TopDownShooter
         public int hp;
         //Odległość od gracza
         public float distance;
+        //Siła przeciwnika
+        public int strenght;
 
         public void Follow(Vector2 target)
         {
@@ -46,9 +48,10 @@ namespace TopDownShooter
                 direction.Normalize();
             }
 
-            if (distance < baseSpeed)
-                velocity += direction * distance;
-            else
+            if (distance < baseSpeed+25)
+            {
+                //velocity -= direction * distance;
+            }else
                 velocity += direction * baseSpeed;
 
             position += velocity;
