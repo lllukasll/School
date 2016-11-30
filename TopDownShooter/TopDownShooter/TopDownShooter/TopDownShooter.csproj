@@ -81,6 +81,7 @@
     <Compile Include="GunManager.cs" />
     <Compile Include="Inventory.cs" />
     <Compile Include="InventoryManager.cs" />
+    <Compile Include="LevelManager.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="SpriteAnimation.cs" />
     <Compile Include="SpriteManager.cs" />
