@@ -13,15 +13,27 @@ namespace TopDownShooter
     {
         public Texture2D texture;
         public Vector2 position;
+        public int gunIndex;
+        public bool isVisible = true;
 
         public Rectangle boundingBox;
         private string text;
         private SpriteFont font;
         private bool isStringVisible = false;
-        private bool isVisible = true;
+        
         private KeyboardState kbState;
         private float stringPositionX;
 
+        public Gun() { }
+
+        public Gun(Texture2D Texture, Vector2 Position, string Text, int GunIndex,ContentManager Content)
+        {
+            texture = Texture;
+            position = Position;
+            text = "Aby podniesc " + Text + " nacisnij E";
+            gunIndex = GunIndex;
+            font = Content.Load<SpriteFont>("Gun");
+        }
         public void Initialize(Texture2D Texture, Vector2 Position, string Text)
         {
             texture = Texture;

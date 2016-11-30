@@ -16,6 +16,8 @@ namespace TopDownShooter
         Player player = new Player();
         EnemyManager enemy = new EnemyManager();
         Gun Machinegun = new Gun();
+        GunManager gun = new GunManager();
+
 
         public Game1()
         {
@@ -60,6 +62,10 @@ namespace TopDownShooter
             if (enemy.fatsos.Count < 2)
                 enemy.SpawnFatso(randX, randY, Content);
 
+            //Sprawdzenie czy broni jest mniej niz 2 jesli tak to dodaj je do listy
+            if (gun.guns.Count < 2)
+                gun.SpawnGun("2h_machinegun", "Machinegun", new Vector2(randX, randY), 1, Content);
+
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
             player.Update(gameTime);
@@ -74,6 +80,12 @@ namespace TopDownShooter
             foreach (Enemy fatso in enemy.fatsos)
             {
                 fatso.Update(gameTime, player.playerPosition, player);
+            }
+
+            //Wykonaj polecenie Update dla ka¿dego aktywnego fatso
+            foreach (Gun gun in gun.guns)
+            {
+                gun.Update(gameTime,player);
             }
 
             for (int i = 0; i < player.bullets.Count; i++)
@@ -121,6 +133,18 @@ namespace TopDownShooter
 
             Machinegun.Update(gameTime, player);
 
+            
+
+            //Sprawdzenie czy ktoras z broni jest niewidoczny , jeœli tak to usun go z listy
+            for (int i = 0; i < gun.guns.Count; i++)
+            {
+                if (!gun.guns[i].isVisible)
+                {
+                    gun.guns.RemoveAt(i);
+                    i--;
+                }
+            }
+
             base.Update(gameTime);
         }
 
@@ -145,7 +169,12 @@ namespace TopDownShooter
                 fatso.Draw(spriteBatch);
             }
 
-            
+            foreach (Gun gun in gun.guns)
+            {
+                gun.Draw(spriteBatch);
+            }
+
+
             spriteBatch.End();
             base.Draw(gameTime);
         }
