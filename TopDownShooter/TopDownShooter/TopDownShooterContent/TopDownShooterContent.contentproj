@@ -35,8 +35,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="PlayerTorso1hAnimation.png">
-      <Name>PlayerTorso1hAnimation</Name>
+    <Compile Include="PlayerTorso2hAnimation.png">
+      <Name>PlayerTorso2hAnimation</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
@@ -149,6 +149,13 @@
   <ItemGroup>
     <Compile Include="Root.png">
       <Name>Root</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="PlayerTorso1hAnimation.png">
+      <Name>PlayerTorso1hAnimation</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

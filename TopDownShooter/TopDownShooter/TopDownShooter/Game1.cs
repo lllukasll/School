@@ -26,7 +26,7 @@ namespace TopDownShooter
         {
             base.Initialize();
             levelManager.Initialize(Content);
-            this.IsMouseVisible = true;
+            //this.IsMouseVisible = true;
         }
 
         protected override void LoadContent()

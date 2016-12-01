@@ -44,7 +44,13 @@ namespace TopDownShooter
 
         //Bullets
         public List<Bullets> bullets = new List<Bullets>();
-        
+        public int strength;
+
+        //Item trzymany przez gracza 
+        bool isHolding;
+        Texture2D itemTexture;
+        Vector2 itemPosition;
+        Rectangle itemBoundingBox;
 
         //HP
         Texture2D hpBarTexture;
@@ -68,6 +74,8 @@ namespace TopDownShooter
             hpScale.Y = 1;
             delayTime = 15;
             tmpdelayTime = delayTime;
+            strength = 0;
+            
 
         }
 
@@ -80,7 +88,7 @@ namespace TopDownShooter
 
             //Animacja Gracza
             Texture2D legsTexture = Content.Load<Texture2D>("PlayerLegsAnimation");
-            torsoTexture = Content.Load<Texture2D>("PlayerTorso1hAnimation");
+            torsoTexture = Content.Load<Texture2D>("PlayerTorso2hAnimation");
 
             playerLegsAnimation = new SpriteAnimation(legsTexture, 4, 2);
             playerLegsAnimation.Position = new Vector2(100, 100);
@@ -118,6 +126,8 @@ namespace TopDownShooter
 
         public void Update(GameTime gameTime,InventoryManager inventoryManager)
         {
+            //Ustawia położenie itemu aktualnie trzymanego przez gracza 
+            itemPosition = new Vector2(playerLegsAnimation.Position.X, playerLegsAnimation.Position.Y);
 
             //BoundingBox aktualizacja
             boundingBox = new Rectangle((int)playerPosition.X,(int) playerPosition.Y, playerWidth, playerHeight);
@@ -141,11 +151,12 @@ namespace TopDownShooter
 
             if ((kbState.IsKeyDown(Keys.Up) && kbState.IsKeyDown(Keys.Right)) || (kbState.IsKeyDown(Keys.W) && kbState.IsKeyDown(Keys.D)))
             {
+                /*
                 if (rotation < -MathHelper.PiOver4 - MathHelper.PiOver2)
                     rotation = -MathHelper.PiOver4 - MathHelper.PiOver2;
                 else if (rotation > MathHelper.PiOver4)
                     rotation = MathHelper.PiOver4;
-
+                */
                 playerLegsAnimation.Position.Y -= 2;
                 playerLegsAnimation.Position.X += 2;
                 if (playerLegsAnimation.Animation != "UpRight")
@@ -153,11 +164,12 @@ namespace TopDownShooter
             }
             else if ((kbState.IsKeyDown(Keys.Down) && kbState.IsKeyDown(Keys.Right)) || (kbState.IsKeyDown(Keys.S) && kbState.IsKeyDown(Keys.D)))
             {
+                /*
                 if (rotation > MathHelper.PiOver4 + MathHelper.PiOver2)
                     rotation = MathHelper.PiOver4 + MathHelper.PiOver2;
                 else if (rotation < -MathHelper.PiOver4)
                     rotation = -MathHelper.PiOver4;
-
+                */
                 playerLegsAnimation.Position.Y += 2;
                 playerLegsAnimation.Position.X += 2;
                 if (playerLegsAnimation.Animation != "DownRight")
@@ -165,11 +177,12 @@ namespace TopDownShooter
             }
             else if ((kbState.IsKeyDown(Keys.Left) && kbState.IsKeyDown(Keys.Up)) || (kbState.IsKeyDown(Keys.A) && kbState.IsKeyDown(Keys.W)))
             {
+                /*
                 if (rotation > -0.75f && rotation < 0.75f)
                     rotation = -0.75f;
                 else if (rotation < 2.25f && rotation > 0.75f)
                     rotation = 2.25f;
-
+                */
                 playerLegsAnimation.Position.Y -= 2;
                 playerLegsAnimation.Position.X -= 2;
                 if (playerLegsAnimation.Animation != "LeftUp")
@@ -177,11 +190,12 @@ namespace TopDownShooter
             }
             else if ((kbState.IsKeyDown(Keys.Down) && kbState.IsKeyDown(Keys.Left)) || (kbState.IsKeyDown(Keys.S) && kbState.IsKeyDown(Keys.A)))
             {
+                /*
                 if (rotation < 0.75f && rotation > -0.75f)
                     rotation = 0.75f;
                 else if (rotation > -2.25f && rotation < -0.75f)
                     rotation = -2.25f;
-
+                */
                 playerLegsAnimation.Position.Y += 2;
                 playerLegsAnimation.Position.X -= 2;
                 if (playerLegsAnimation.Animation != "LeftDown")
@@ -189,44 +203,48 @@ namespace TopDownShooter
             }
             else if (kbState.IsKeyDown(Keys.Left) || kbState.IsKeyDown(Keys.A))
             {
+                /*
                 if (rotation > -1.6f && rotation < 0)
                     rotation = -1.6f;
                 else if (rotation < 1.5f && rotation > 0)
                     rotation = 1.5f;
-
+                */
                 playerLegsAnimation.Position.X -= 2;
                 if (playerLegsAnimation.Animation != "Left")
                     playerLegsAnimation.Animation = "Left";
             }
             else if (kbState.IsKeyDown(Keys.Right) || kbState.IsKeyDown(Keys.D))
             {
+                /*
                 if (rotation < -1.5f && rotation > -4.0f)
                     rotation = -1.5f;
                 else if (rotation > 1.5f && rotation < 4f)
                     rotation = 1.5f;
-
+                */
                 playerLegsAnimation.Position.X += 2;
                 if (playerLegsAnimation.Animation != "Right")
                     playerLegsAnimation.Animation = "Right";
             }
             else if (kbState.IsKeyDown(Keys.Up) || kbState.IsKeyDown(Keys.W))
             {
+                /*
                 if (rotation > 0.0f && rotation < 1.5f)
                     rotation = 0.0f;
                 else if (rotation < 3.0f && rotation > 1.5f)
                     rotation = 3.0f;
-
+                */
                 playerLegsAnimation.Position.Y -= 2;
                 if (playerLegsAnimation.Animation != "Up")
                     playerLegsAnimation.Animation = "Up";
             }
             else if (kbState.IsKeyDown(Keys.Down) || kbState.IsKeyDown(Keys.S))
             {
+                /*
                 if (rotation < 0.0f && rotation > -1.5f)
                     rotation = 0.0f;
                 else if (rotation < 3.0f && rotation < -1.5f)
                     rotation = 3.0f;
-
+                */
                 playerLegsAnimation.Position.Y += 2;
                 if (playerLegsAnimation.Animation != "Down")
                     playerLegsAnimation.Animation = "Down";
@@ -341,6 +359,11 @@ namespace TopDownShooter
             //Rysuje tors
             spriteBatch.Draw(torsoTexture, playerLegsAnimation.Position, null, Color.White, rotation,
                 new Vector2(torsoTexture.Width / 2, torsoTexture.Height / 2), 1.0f, SpriteEffects.None, 1.0f);
+
+            //Jeżli gracz coś trzyma to rysuje item
+            if (isHolding)
+                spriteBatch.Draw(itemTexture, itemPosition, null, Color.White, rotation,
+                    new Vector2(torsoTexture.Width / 2, torsoTexture.Height / 2), 1.0f, SpriteEffects.None, 1.0f);
         }
 
         public void DecreaseHP(int ammountToDecrease)
@@ -364,14 +387,26 @@ namespace TopDownShooter
             if(index==0)//Wybrany pistolet
             {
                 ChangeShootingDelay(15);
+                strength = 30;
+                isHolding = true;
+                itemTexture = Content.Load<Texture2D>("Pistol");
+                torsoTexture = Content.Load<Texture2D>("PlayerTorso1hAnimation");
             }
             if (index==1)//Wybrany sniper
             {
                 ChangeShootingDelay(40);
+                strength = 100;
+                isHolding = true;
+                itemTexture = Content.Load<Texture2D>("Sniper");
+                torsoTexture = Content.Load<Texture2D>("PlayerTorso2hAnimation");
             }
             if (index==2)//Wybrany machinegun
             {
                 ChangeShootingDelay(2);
+                strength = 20;
+                isHolding = true;
+                itemTexture = Content.Load<Texture2D>("Machinegun");
+                torsoTexture = Content.Load<Texture2D>("PlayerTorso2hAnimation");
             }
         }
     }

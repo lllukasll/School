@@ -123,7 +123,7 @@ namespace TopDownShooter
                     if (enemy.zombies[j].boundingBox.Intersects(player.bullets[i].boundingBox))
                     {
                         player.bullets.ElementAt(i).isVisible = false;
-                        enemy.zombies[j].DecreaseHP(50);
+                        enemy.zombies[j].DecreaseHP(player.strength);
                     }
                 }
                 for (int j = 0; j < enemy.fatsos.Count; j++)
@@ -132,7 +132,7 @@ namespace TopDownShooter
                     if (enemy.fatsos[j].boundingBox.Intersects(player.bullets[i].boundingBox))
                     {
                         player.bullets.ElementAt(i).isVisible = false;
-                        enemy.fatsos[j].DecreaseHP(50);
+                        enemy.fatsos[j].DecreaseHP(player.strength);
                     }
                 }
             }
