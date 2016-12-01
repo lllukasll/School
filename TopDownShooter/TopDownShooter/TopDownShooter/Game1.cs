@@ -14,7 +14,10 @@ namespace TopDownShooter
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         LevelManager levelManager = new LevelManager();
-        
+        KeyboardState kbState;
+        Camera camera;
+
+        Vector2 ScreenSize;
 
         public Game1()
         {
@@ -26,6 +29,8 @@ namespace TopDownShooter
         {
             base.Initialize();
             levelManager.Initialize(Content);
+            camera = new Camera(GraphicsDevice.Viewport);
+            ScreenSize = new Vector2(Window.ClientBounds.Width, Window.ClientBounds.Height);
             //this.IsMouseVisible = true;
         }
 
@@ -42,19 +47,24 @@ namespace TopDownShooter
 
         protected override void Update(GameTime gameTime)
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
+            kbState = Keyboard.GetState();
+
+            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || kbState.IsKeyDown(Keys.Escape))
                 this.Exit();
 
             
-            levelManager.Update(gameTime, Content);
-            
+            levelManager.Update(gameTime, Content,ScreenSize);
+            camera.Update(gameTime, levelManager.player,ScreenSize.X,ScreenSize.Y);
             base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
-            spriteBatch.Begin();
+            spriteBatch.Begin(SpriteSortMode.Deferred,
+                BlendState.AlphaBlend,
+                null,null,null,null,
+                camera.transform);
             levelManager.Draw(spriteBatch);
            
             spriteBatch.End();

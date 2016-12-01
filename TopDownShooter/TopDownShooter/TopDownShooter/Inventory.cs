@@ -19,6 +19,10 @@ namespace TopDownShooter
         Texture2D iconTexture;
         //Pozycja pola
         Vector2 position;
+        //Pozycja końcowa (potrzebne przy poruszaniu się)
+        Vector2 endPosition;
+        //Pozycja napisu o tyypie broni i ilosci dostepnej amunicji
+        Vector2 stringPosition;
         //Czy jest aktywne
         bool isActive;
         //Czy jest puste
@@ -43,6 +47,7 @@ namespace TopDownShooter
         int itemIndex;
         //Sprawdza czy wlasnie zmieniony zeby moc wyslac numer indexu do gracza 
         public bool justChanged = false;
+        
 
         public Inventory() { }
 
@@ -73,7 +78,7 @@ namespace TopDownShooter
             textureChoosen = Content.Load<Texture2D>("InventoryBorderChoosen");
         }
 
-        public void Update(GameTime gametime,ContentManager Content, Player player)
+        public void Update(GameTime gametime,ContentManager Content, Player player,Vector2 screenSize)
         {
             
 
@@ -109,22 +114,22 @@ namespace TopDownShooter
                 }
             }
 
-
-
+            endPosition = new Vector2(player.playerPosition.X - 400 + 10 + texture.Width, player.playerPosition.Y - 200 + position.Y );
+            stringPosition = new Vector2(player.playerPosition.X - screenSize.X/2 + 40, player.playerPosition.Y - screenSize.Y / 2 + 80);
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
             
             if(isActive)
-                spriteBatch.Draw(iconTexture, position, Color.White);
+                spriteBatch.Draw(iconTexture, endPosition, Color.White);
             if (isChoosen)
             {
-                spriteBatch.DrawString(font, itemInformationString, new Vector2(10, 40), Color.White);
-                spriteBatch.Draw(textureChoosen, position, Color.White);
+                spriteBatch.DrawString(font, itemInformationString, stringPosition, Color.White);
+                spriteBatch.Draw(textureChoosen, endPosition, Color.White);
             }else
             {
-                spriteBatch.Draw(texture, position, Color.White);
+                spriteBatch.Draw(texture, endPosition, Color.White);
             }
             
         }

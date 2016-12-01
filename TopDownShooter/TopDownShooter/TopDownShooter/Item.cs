@@ -14,6 +14,7 @@ namespace TopDownShooter
         //Tekstura przedmiotu
         public Texture2D texture;
         //Pozycja przedmiotu
+        public Vector2 startPosition;
         public Vector2 position;
         //Index przedmiotu
         public int itemIndex;
@@ -53,7 +54,7 @@ namespace TopDownShooter
         public void Initialize(Texture2D Texture, Vector2 Position, string Text, int Type)
         {
             texture = Texture;
-            position = Position;
+            startPosition = Position;
             text = "Aby podniesc " + Text + " nacisnij E";
             gunName = Text;
             type = Type;
@@ -64,7 +65,7 @@ namespace TopDownShooter
             font = Content.Load<SpriteFont>("Gun");
         }
 
-        public void Update(GameTime gameTime,Player player,InventoryManager inventoryManager)
+        public void Update(GameTime gameTime,Player player,InventoryManager inventoryManager,Background background)
         {
             boundingBox = new Rectangle((int)position.X, (int)position.Y, texture.Width, texture.Height);
             prevkbState = kbState;
@@ -100,6 +101,8 @@ namespace TopDownShooter
                 isStringVisible = false;
             }
             stringPositionX =position.X + texture.Width/2 - font.MeasureString(text).X/2;
+
+            //position = new Vector2(background.backgroundPosition.X + startPosition.X,background.backgroundPosition.Y+startPosition.Y);
         }
 
         public void Draw(SpriteBatch spriteBatch)

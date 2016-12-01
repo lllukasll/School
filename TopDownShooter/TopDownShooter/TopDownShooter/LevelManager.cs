@@ -11,7 +11,7 @@ namespace TopDownShooter
 {
     class LevelManager
     {
-        Player player = new Player();
+        public Player player = new Player();
         EnemyManager enemy = new EnemyManager();
         Item Machinegun = new Item();
         ItemManager item = new ItemManager();
@@ -20,21 +20,23 @@ namespace TopDownShooter
         InventoryManager inventoryManager = new InventoryManager();
         KeyboardState kbState,prevKbState;
         bool start = true;
+        Background background = new Background();
 
         public void Initialize(ContentManager Content)
         {
             player.Initialize(Content);
-
+            background.Initialize(player);
            // inventory.Initialize(new Vector2(10, 64));
         }
 
         public void LoadContent(ContentManager Content)
         {
             player.LoadContent(Content);
+            background.LoadContent(Content);
             //inventory.LoadContent(Content);
         }
 
-        public void Update(GameTime gameTime,ContentManager Content)
+        public void Update(GameTime gameTime,ContentManager Content,Vector2 screenSize)
         {
             if(start)
             {
@@ -95,7 +97,7 @@ namespace TopDownShooter
                 item.SpawnItem("Sniper", "Sniper", new Vector2(randX2, randY2), 1, Content,20,20,1);
             }
 
-            player.Update(gameTime,inventoryManager);
+            player.Update(gameTime,inventoryManager,screenSize);
 
             //Wykonaj polecenie Update dla każdego aktywnego zombie
             foreach (Enemy zombie in enemy.zombies)
@@ -112,7 +114,7 @@ namespace TopDownShooter
             //Wykonaj polecenie Update dla każdego aktywnego przedmiotu
             foreach (Item item in item.items)
             {
-                item.Update(gameTime, player, inventoryManager);
+                item.Update(gameTime, player, inventoryManager,background);
             }
 
             for (int i = 0; i < player.bullets.Count; i++)
@@ -165,7 +167,7 @@ namespace TopDownShooter
             //Wykonaj polecenie Update dla każdego pola w inventory
             foreach (Inventory field in inventoryManager.inventory)
             {
-                field.Update(gameTime, Content,player);
+                field.Update(gameTime, Content,player,screenSize);
             }
 
             //Sprawdzenie czy ktoras z broni jest niewidoczny , jeśli tak to usun go z listy
@@ -182,6 +184,7 @@ namespace TopDownShooter
 
         public void Draw(SpriteBatch spriteBatch)
         {
+            background.DrawBackground(spriteBatch);
             player.Draw(spriteBatch);
 
             //Wyswietla wszystkie zombie
@@ -196,6 +199,8 @@ namespace TopDownShooter
                 fatso.Draw(spriteBatch);
             }
 
+            background.DrawTrees(spriteBatch);
+
             foreach (Item item in item.items)
             {
                 item.Draw(spriteBatch);
@@ -204,6 +209,7 @@ namespace TopDownShooter
             {
                 field.Draw(spriteBatch);
             }
+
             //inventory.Draw(spriteBatch);
         }
     }

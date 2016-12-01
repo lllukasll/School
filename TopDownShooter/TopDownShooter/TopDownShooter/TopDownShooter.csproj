@@ -73,7 +73,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AnimationClass.cs" />
+    <Compile Include="Background.cs" />
     <Compile Include="Bullets.cs" />
+    <Compile Include="Camera.cs" />
     <Compile Include="CharacterAnimationManager.cs" />
     <Compile Include="EnemyManager.cs" />
     <Compile Include="FrameAnimation.cs" />

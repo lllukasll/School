@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
+using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Media;
 
 
 
@@ -50,7 +53,7 @@ namespace TopDownShooter
         bool isHolding;
         Texture2D itemTexture;
         Vector2 itemPosition;
-        Rectangle itemBoundingBox;
+        //Rectangle itemBoundingBox;
 
         //HP
         Texture2D hpBarTexture;
@@ -75,7 +78,7 @@ namespace TopDownShooter
             delayTime = 15;
             tmpdelayTime = delayTime;
             strength = 0;
-            
+
 
         }
 
@@ -124,7 +127,7 @@ namespace TopDownShooter
 
         }
 
-        public void Update(GameTime gameTime,InventoryManager inventoryManager)
+        public void Update(GameTime gameTime, InventoryManager inventoryManager, Vector2 screenSize)
         {
             //Ustawia położenie itemu aktualnie trzymanego przez gracza 
             itemPosition = new Vector2(playerLegsAnimation.Position.X, playerLegsAnimation.Position.Y);
@@ -256,8 +259,7 @@ namespace TopDownShooter
             }
 
 
-            //HP
-            hpScale.X = Hp / 10;
+            
 
             //Strzelanie
             msState = Mouse.GetState();
@@ -304,6 +306,10 @@ namespace TopDownShooter
             //Wyświetlanie animacji gracza
             playerPosition = playerLegsAnimation.Position;
             playerLegsAnimation.Update(gameTime);
+
+            //HP
+            hpScale.X = Hp / 10;
+            hpPosition = new Vector2(playerPosition.X - screenSize.X / 2 + 40, playerPosition.Y - screenSize.Y / 2 + 10 + hpBarTexture.Height);
         }
 
         //Bullets metod
