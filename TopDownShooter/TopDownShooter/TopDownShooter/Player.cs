@@ -139,7 +139,7 @@ namespace TopDownShooter
             kbState = Keyboard.GetState();
 
 
-            if (kbState.IsKeyDown(Keys.Up) && kbState.IsKeyDown(Keys.Right))
+            if ((kbState.IsKeyDown(Keys.Up) && kbState.IsKeyDown(Keys.Right)) || (kbState.IsKeyDown(Keys.W) && kbState.IsKeyDown(Keys.D)))
             {
                 if (rotation < -MathHelper.PiOver4 - MathHelper.PiOver2)
                     rotation = -MathHelper.PiOver4 - MathHelper.PiOver2;
@@ -151,7 +151,7 @@ namespace TopDownShooter
                 if (playerLegsAnimation.Animation != "UpRight")
                     playerLegsAnimation.Animation = "UpRight";
             }
-            else if (kbState.IsKeyDown(Keys.Down) && kbState.IsKeyDown(Keys.Right))
+            else if ((kbState.IsKeyDown(Keys.Down) && kbState.IsKeyDown(Keys.Right)) || (kbState.IsKeyDown(Keys.S) && kbState.IsKeyDown(Keys.D)))
             {
                 if (rotation > MathHelper.PiOver4 + MathHelper.PiOver2)
                     rotation = MathHelper.PiOver4 + MathHelper.PiOver2;
@@ -163,7 +163,7 @@ namespace TopDownShooter
                 if (playerLegsAnimation.Animation != "DownRight")
                     playerLegsAnimation.Animation = "DownRight";
             }
-            else if (kbState.IsKeyDown(Keys.Left) && kbState.IsKeyDown(Keys.Up))
+            else if ((kbState.IsKeyDown(Keys.Left) && kbState.IsKeyDown(Keys.Up)) || (kbState.IsKeyDown(Keys.A) && kbState.IsKeyDown(Keys.W)))
             {
                 if (rotation > -0.75f && rotation < 0.75f)
                     rotation = -0.75f;
@@ -175,7 +175,7 @@ namespace TopDownShooter
                 if (playerLegsAnimation.Animation != "LeftUp")
                     playerLegsAnimation.Animation = "LeftUp";
             }
-            else if (kbState.IsKeyDown(Keys.Down) && kbState.IsKeyDown(Keys.Left))
+            else if ((kbState.IsKeyDown(Keys.Down) && kbState.IsKeyDown(Keys.Left)) || (kbState.IsKeyDown(Keys.S) && kbState.IsKeyDown(Keys.A)))
             {
                 if (rotation < 0.75f && rotation > -0.75f)
                     rotation = 0.75f;
@@ -187,7 +187,7 @@ namespace TopDownShooter
                 if (playerLegsAnimation.Animation != "LeftDown")
                     playerLegsAnimation.Animation = "LeftDown";
             }
-            else if (kbState.IsKeyDown(Keys.Left))
+            else if (kbState.IsKeyDown(Keys.Left) || kbState.IsKeyDown(Keys.A))
             {
                 if (rotation > -1.6f && rotation < 0)
                     rotation = -1.6f;
@@ -198,7 +198,7 @@ namespace TopDownShooter
                 if (playerLegsAnimation.Animation != "Left")
                     playerLegsAnimation.Animation = "Left";
             }
-            else if (kbState.IsKeyDown(Keys.Right))
+            else if (kbState.IsKeyDown(Keys.Right) || kbState.IsKeyDown(Keys.D))
             {
                 if (rotation < -1.5f && rotation > -4.0f)
                     rotation = -1.5f;
@@ -209,7 +209,7 @@ namespace TopDownShooter
                 if (playerLegsAnimation.Animation != "Right")
                     playerLegsAnimation.Animation = "Right";
             }
-            else if (kbState.IsKeyDown(Keys.Up))
+            else if (kbState.IsKeyDown(Keys.Up) || kbState.IsKeyDown(Keys.W))
             {
                 if (rotation > 0.0f && rotation < 1.5f)
                     rotation = 0.0f;
@@ -220,7 +220,7 @@ namespace TopDownShooter
                 if (playerLegsAnimation.Animation != "Up")
                     playerLegsAnimation.Animation = "Up";
             }
-            else if (kbState.IsKeyDown(Keys.Down))
+            else if (kbState.IsKeyDown(Keys.Down) || kbState.IsKeyDown(Keys.S))
             {
                 if (rotation < 0.0f && rotation > -1.5f)
                     rotation = 0.0f;
