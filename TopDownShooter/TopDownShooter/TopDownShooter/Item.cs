@@ -65,7 +65,7 @@ namespace TopDownShooter
             font = Content.Load<SpriteFont>("Gun");
         }
 
-        public void Update(GameTime gameTime,Player player,InventoryManager inventoryManager,Background background)
+        public void Update(GameTime gameTime,Player player,InventoryManager inventoryManager)
         {
             boundingBox = new Rectangle((int)position.X, (int)position.Y, texture.Width, texture.Height);
             prevkbState = kbState;

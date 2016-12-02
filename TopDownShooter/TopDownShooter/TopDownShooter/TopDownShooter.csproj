@@ -77,14 +77,18 @@
     <Compile Include="Bullets.cs" />
     <Compile Include="Camera.cs" />
     <Compile Include="CharacterAnimationManager.cs" />
+    <Compile Include="Door.cs" />
     <Compile Include="EnemyManager.cs" />
     <Compile Include="FrameAnimation.cs" />
     <Compile Include="Item.cs" />
     <Compile Include="ItemManager.cs" />
     <Compile Include="Inventory.cs" />
     <Compile Include="InventoryManager.cs" />
+    <Compile Include="LabiryntGenerator.cs" />
     <Compile Include="LevelManager.cs" />
     <Compile Include="Player.cs" />
+    <Compile Include="Room.cs" />
+    <Compile Include="RoomGenerator.cs" />
     <Compile Include="SpriteAnimation.cs" />
     <Compile Include="SpriteManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -97,6 +101,7 @@
     <Content Include="GameThumbnail.png">
       <XnaPlatformSpecific>true</XnaPlatformSpecific>
     </Content>
+    <Content Include="Room3.png" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TopDownShooterContent\TopDownShooterContent.contentproj">

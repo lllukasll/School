@@ -73,7 +73,7 @@ namespace TopDownShooter
 
         public void LoadContent(ContentManager Content)
         {
-            texture = Content.Load<Texture2D>("InventoryBorder");
+            texture = Content.Load<Texture2D>("InventoryBorderWhite");
             font = Content.Load<SpriteFont>("ItemInformation");
             textureChoosen = Content.Load<Texture2D>("InventoryBorderChoosen");
         }

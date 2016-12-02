@@ -18,21 +18,28 @@ namespace TopDownShooter
         //Inventory inventory = new Inventory();
         //InventoryManager 
         InventoryManager inventoryManager = new InventoryManager();
+        //RoomGenerator roomGenerator = new RoomGenerator();
         KeyboardState kbState,prevKbState;
         bool start = true;
-        Background background = new Background();
+        //Background background = new Background();
+        //Room room = new Room();
+        LabiryntGenerator labiryntGenerator;
 
         public void Initialize(ContentManager Content)
         {
             player.Initialize(Content);
-            background.Initialize(player);
-           // inventory.Initialize(new Vector2(10, 64));
+            //room.Initialize();
+            //background.Initialize(player);
+            //inventory.Initialize(new Vector2(10, 64));
+            labiryntGenerator = new LabiryntGenerator(3, 3, Content);
+            labiryntGenerator.genarateMaze();
         }
 
         public void LoadContent(ContentManager Content)
         {
             player.LoadContent(Content);
-            background.LoadContent(Content);
+            //room.LoadContent(Content);
+            //background.LoadContent(Content);
             //inventory.LoadContent(Content);
         }
 
@@ -82,6 +89,14 @@ namespace TopDownShooter
             int randX2 = rnd.Next(100, 400);
             int randY2 = rnd.Next(100, 400);
 
+            /*
+            //Jeżeli pokoi jest mniej niż 2 w liście to dodaj
+            if (roomGenerator.rooms.Count < 2)
+            {
+                roomGenerator.SpawnRoom(0, Content,new Vector2(0,0));
+                roomGenerator.SpawnRoom(1, Content,new Vector2(0,0));
+            }*/
+
             //Jeżeli jest mniej niż 3 zombie dodaj je do listy w losowych miejscach
             if (enemy.zombies.Count < 3)
                 enemy.SpawnZombie(randX, randY, Content);
@@ -114,7 +129,7 @@ namespace TopDownShooter
             //Wykonaj polecenie Update dla każdego aktywnego przedmiotu
             foreach (Item item in item.items)
             {
-                item.Update(gameTime, player, inventoryManager,background);
+                item.Update(gameTime, player, inventoryManager);
             }
 
             for (int i = 0; i < player.bullets.Count; i++)
@@ -180,13 +195,46 @@ namespace TopDownShooter
                 }
             }
 
+            
+            //Po nacisnieciu przyciskow zmieniaja sie pokoje
+            if (kbState.IsKeyDown(Keys.L))
+            {
+                labiryntGenerator.rooms[0, 0].isVisible = true;
+                labiryntGenerator.rooms[0, 0].ChangePlayerPosition(player);
+                labiryntGenerator.rooms[0, 0].CheckDoorNumber(Content);
+               // roomGenerator.rooms.ElementAt(1).isVisible = false;
+            }
+            /*
+            if (kbState.IsKeyDown(Keys.M))
+            {
+                roomGenerator.rooms.ElementAt(0).isVisible = false;
+                roomGenerator.rooms.ElementAt(1).isVisible = true;
+                roomGenerator.rooms.ElementAt(1).ChangePlayerPosition(player);
+            }
+            */
+            
+            foreach(Room room in labiryntGenerator.rooms)
+            {
+                room.Update(gameTime, player,Content);
+            }
+            
+            //room.Update(gameTime);
+
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            background.DrawBackground(spriteBatch);
+            //room.Draw(spriteBatch);
+            //background.DrawBackground(spriteBatch);
+            
+            foreach (Room room in labiryntGenerator.rooms)
+            {
+                room.Draw(spriteBatch);
+            }
+            
             player.Draw(spriteBatch);
 
+            
             //Wyswietla wszystkie zombie
             foreach (Enemy zombie in enemy.zombies)
             {
@@ -199,7 +247,7 @@ namespace TopDownShooter
                 fatso.Draw(spriteBatch);
             }
 
-            background.DrawTrees(spriteBatch);
+            //background.DrawTrees(spriteBatch);
 
             foreach (Item item in item.items)
             {

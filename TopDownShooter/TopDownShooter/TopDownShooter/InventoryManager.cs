@@ -15,7 +15,7 @@ namespace TopDownShooter
 
         public void DrawInventory(ContentManager Content,Vector2 Position)
         {
-            Inventory field = new Inventory(Content.Load<Texture2D>("InventoryBorder"), 
+            Inventory field = new Inventory(Content.Load<Texture2D>("InventoryBorderWhite"), 
                 Content.Load<Texture2D>("InventoryBorderChoosen"),
                 Position,
                 Content.Load<SpriteFont>("ItemInformation"));

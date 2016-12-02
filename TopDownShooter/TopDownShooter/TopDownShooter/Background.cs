@@ -12,7 +12,7 @@ namespace TopDownShooter
     class Background
     {
         Texture2D backgroundTexture;
-        Texture2D treesTexture;
+        //Texture2D treesTexture;
 
         public Vector2 backgroundPosition;
 
@@ -27,8 +27,8 @@ namespace TopDownShooter
 
         public void LoadContent(ContentManager Content)
         {
-            backgroundTexture = Content.Load<Texture2D>("Background");
-            treesTexture = Content.Load<Texture2D>("Trees");
+            backgroundTexture = Content.Load<Texture2D>("Room2");
+           // treesTexture = Content.Load<Texture2D>("Trees");
         }
 
         public void Update()
@@ -43,7 +43,7 @@ namespace TopDownShooter
 
         public void DrawTrees(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(treesTexture, backgroundPosition, Color.White);
+            //spriteBatch.Draw(treesTexture, backgroundPosition, Color.White);
         }
     }
 }

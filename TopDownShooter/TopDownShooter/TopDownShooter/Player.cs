@@ -31,6 +31,8 @@ namespace TopDownShooter
         float rotation;
         //Zmienna przetrzymująca aktualną pozycje gracza
         public Vector2 playerPosition;
+        //Poprzednia pozycja gracza
+        public Vector2 prevPlayerPosition;
         //Ramka do kolizji
         public Rectangle boundingBox;
         //Wysokość i szerokość gracza
@@ -62,6 +64,12 @@ namespace TopDownShooter
         int Hp;
         Vector2 hpScale;
 
+        //Sprawdzenie czy nie koliduje ze scianami
+        public bool canGoLeft = true;
+        public bool canGoRight = true;
+        public bool canGoUp = true;
+        public bool canGoDown = true;
+
         public void Initialize(ContentManager content)
         {
             //playerTorsoAnimation.FramesPerSecond = 8;
@@ -84,6 +92,7 @@ namespace TopDownShooter
 
         public void LoadContent(ContentManager Content)
         {
+            
             //HP
             hpBarTexture = Content.Load<Texture2D>("hpBar");
             hpTextutre = Content.Load<Texture2D>("hp");
@@ -94,7 +103,7 @@ namespace TopDownShooter
             torsoTexture = Content.Load<Texture2D>("PlayerTorso2hAnimation");
 
             playerLegsAnimation = new SpriteAnimation(legsTexture, 4, 2);
-            playerLegsAnimation.Position = new Vector2(100, 100);
+            playerLegsAnimation.Position = new Vector2(300, 100);
 
 
             playerLegsAnimation.AddAnimation("Right", 1, 4, ani.Copy());
@@ -129,6 +138,8 @@ namespace TopDownShooter
 
         public void Update(GameTime gameTime, InventoryManager inventoryManager, Vector2 screenSize)
         {
+            prevPlayerPosition = playerPosition;
+
             //Ustawia położenie itemu aktualnie trzymanego przez gracza 
             itemPosition = new Vector2(playerLegsAnimation.Position.X, playerLegsAnimation.Position.Y);
 
@@ -152,7 +163,7 @@ namespace TopDownShooter
             kbState = Keyboard.GetState();
 
 
-            if ((kbState.IsKeyDown(Keys.Up) && kbState.IsKeyDown(Keys.Right)) || (kbState.IsKeyDown(Keys.W) && kbState.IsKeyDown(Keys.D)))
+            if (((kbState.IsKeyDown(Keys.Up) && kbState.IsKeyDown(Keys.Right)) || (kbState.IsKeyDown(Keys.W) && kbState.IsKeyDown(Keys.D))) && (canGoUp &&canGoRight))
             {
                 /*
                 if (rotation < -MathHelper.PiOver4 - MathHelper.PiOver2)
@@ -165,7 +176,7 @@ namespace TopDownShooter
                 if (playerLegsAnimation.Animation != "UpRight")
                     playerLegsAnimation.Animation = "UpRight";
             }
-            else if ((kbState.IsKeyDown(Keys.Down) && kbState.IsKeyDown(Keys.Right)) || (kbState.IsKeyDown(Keys.S) && kbState.IsKeyDown(Keys.D)))
+            else if (((kbState.IsKeyDown(Keys.Down) && kbState.IsKeyDown(Keys.Right)) || (kbState.IsKeyDown(Keys.S) && kbState.IsKeyDown(Keys.D))) && (canGoDown && canGoRight))
             {
                 /*
                 if (rotation > MathHelper.PiOver4 + MathHelper.PiOver2)
@@ -178,7 +189,7 @@ namespace TopDownShooter
                 if (playerLegsAnimation.Animation != "DownRight")
                     playerLegsAnimation.Animation = "DownRight";
             }
-            else if ((kbState.IsKeyDown(Keys.Left) && kbState.IsKeyDown(Keys.Up)) || (kbState.IsKeyDown(Keys.A) && kbState.IsKeyDown(Keys.W)))
+            else if (((kbState.IsKeyDown(Keys.Left) && kbState.IsKeyDown(Keys.Up)) || (kbState.IsKeyDown(Keys.A) && kbState.IsKeyDown(Keys.W))) && (canGoLeft&& canGoUp))
             {
                 /*
                 if (rotation > -0.75f && rotation < 0.75f)
@@ -191,7 +202,7 @@ namespace TopDownShooter
                 if (playerLegsAnimation.Animation != "LeftUp")
                     playerLegsAnimation.Animation = "LeftUp";
             }
-            else if ((kbState.IsKeyDown(Keys.Down) && kbState.IsKeyDown(Keys.Left)) || (kbState.IsKeyDown(Keys.S) && kbState.IsKeyDown(Keys.A)))
+            else if (((kbState.IsKeyDown(Keys.Down) && kbState.IsKeyDown(Keys.Left)) || (kbState.IsKeyDown(Keys.S) && kbState.IsKeyDown(Keys.A))) && (canGoDown && canGoLeft))
             {
                 /*
                 if (rotation < 0.75f && rotation > -0.75f)
@@ -204,7 +215,7 @@ namespace TopDownShooter
                 if (playerLegsAnimation.Animation != "LeftDown")
                     playerLegsAnimation.Animation = "LeftDown";
             }
-            else if (kbState.IsKeyDown(Keys.Left) || kbState.IsKeyDown(Keys.A))
+            else if ((kbState.IsKeyDown(Keys.Left) || kbState.IsKeyDown(Keys.A)) && canGoLeft)
             {
                 /*
                 if (rotation > -1.6f && rotation < 0)
@@ -216,7 +227,7 @@ namespace TopDownShooter
                 if (playerLegsAnimation.Animation != "Left")
                     playerLegsAnimation.Animation = "Left";
             }
-            else if (kbState.IsKeyDown(Keys.Right) || kbState.IsKeyDown(Keys.D))
+            else if ((kbState.IsKeyDown(Keys.Right) || kbState.IsKeyDown(Keys.D)) && canGoRight)
             {
                 /*
                 if (rotation < -1.5f && rotation > -4.0f)
@@ -228,7 +239,7 @@ namespace TopDownShooter
                 if (playerLegsAnimation.Animation != "Right")
                     playerLegsAnimation.Animation = "Right";
             }
-            else if (kbState.IsKeyDown(Keys.Up) || kbState.IsKeyDown(Keys.W))
+            else if ((kbState.IsKeyDown(Keys.Up) || kbState.IsKeyDown(Keys.W)) && canGoUp)
             {
                 /*
                 if (rotation > 0.0f && rotation < 1.5f)
@@ -240,7 +251,7 @@ namespace TopDownShooter
                 if (playerLegsAnimation.Animation != "Up")
                     playerLegsAnimation.Animation = "Up";
             }
-            else if (kbState.IsKeyDown(Keys.Down) || kbState.IsKeyDown(Keys.S))
+            else if ((kbState.IsKeyDown(Keys.Down) || kbState.IsKeyDown(Keys.S)) && canGoDown)
             {
                 /*
                 if (rotation < 0.0f && rotation > -1.5f)
@@ -386,6 +397,11 @@ namespace TopDownShooter
         {
             delayTime = delay;
             tmpdelayTime = delayTime;
+        }
+
+        public void ChangePosition(Vector2 Position)
+        {
+            playerLegsAnimation.Position = Position;
         }
 
         public void ChooseItem(int index)
