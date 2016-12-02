@@ -13,15 +13,16 @@ namespace TopDownShooter
     class Door
     {
         //Numer drzwi 0-4
-        int doorNumber;
+        public int doorNumber;
         //Pozycja drzwi zależnie od numeru
         Vector2 doorPosition;
         //Pole kolizji drzwi
-        Rectangle doorBoundingBox;
+        public Rectangle doorBoundingBox;
         //Czcionka do napisu informujacego o mozliwosci otworzenia drzwi
         SpriteFont font;
         //Czy napis powinien być wyświetlany
         bool isStringVisible;
+        KeyboardState kbState,prevKbState;
 
         public Door() { }
 
@@ -57,16 +58,48 @@ namespace TopDownShooter
 
         }
 
-
-        public void Update(GameTime gameTime,Player player)
+  
+        public void Update(GameTime gameTime,Player player,LevelManager level)//,LabiryntGenerator labiryntGenerator)
         {
+            kbState = Keyboard.GetState();
+            
             if(doorBoundingBox.Intersects(player.boundingBox))
             {
                 isStringVisible = true;
-            }else
-            {
-                isStringVisible = false;
-            }
+                    if(doorNumber==0)
+                    {
+                        level.isColidingWithDoor0 = true;
+                        level.isColidingWithDoor1 = false;
+                        level.isColidingWithDoor2 = false;
+                        level.isColidingWithDoor3 = false;
+                        level.UpdateRoomNumber(level.X++, level.Y);
+                    }else if(doorNumber==1)
+                    {
+                        level.isColidingWithDoor0 = false;
+                        level.isColidingWithDoor1 = true;
+                        level.isColidingWithDoor2 = false;
+                        level.isColidingWithDoor3 = false;
+                        level.UpdateRoomNumber(level.X, level.Y--);
+                    }else if (doorNumber == 2)
+                    {
+                        level.isColidingWithDoor0 = false;
+                        level.isColidingWithDoor1 = false;
+                        level.isColidingWithDoor2 = true;
+                        level.isColidingWithDoor3 = false;
+                        level.UpdateRoomNumber(level.X--, level.Y);
+                }
+                else if (doorNumber == 3)
+                    {
+                        level.isColidingWithDoor0 = false;
+                        level.isColidingWithDoor1 = false;
+                        level.isColidingWithDoor2 = false;
+                        level.isColidingWithDoor3 = true;
+                        level.UpdateRoomNumber(level.X, level.Y++);
+                    }
+                }else
+                {
+                    isStringVisible = false;
+                }
         }
 
         public void Draw(SpriteBatch spriteBatch)

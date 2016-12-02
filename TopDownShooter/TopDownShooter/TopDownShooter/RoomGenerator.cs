@@ -12,14 +12,21 @@ namespace TopDownShooter
 {
     class RoomGenerator
     {
+        
         public List<Room> rooms = new List<Room>();
 
         public void SpawnRoom(int RoomNumber,ContentManager Content,Vector2 Position)
         {
-            Room room = new Room(RoomNumber,Content,Position);
+            //Jeśli będe chciał spawnowac pokoje to musze dodac tu do Contentu roomNumber i Psoition
+            Room room = new Room(RoomNumber,Content);
             rooms.Add(room);
         }
 
+        
 
+        public void Room1()
+        {
+
+        }
     }
 }

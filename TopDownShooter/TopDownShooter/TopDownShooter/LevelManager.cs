@@ -25,14 +25,23 @@ namespace TopDownShooter
         //Room room = new Room();
         LabiryntGenerator labiryntGenerator;
 
+
+        //Zmienne tymczasowe
+        public int X=4, Y=2;
+        public bool isColidingWithDoor0 = false;
+        public bool isColidingWithDoor1 = false;
+        public bool isColidingWithDoor2 = false;
+        public bool isColidingWithDoor3 = false;
+
         public void Initialize(ContentManager Content)
         {
             player.Initialize(Content);
             //room.Initialize();
             //background.Initialize(player);
             //inventory.Initialize(new Vector2(10, 64));
-            labiryntGenerator = new LabiryntGenerator(3, 3, Content);
-            labiryntGenerator.genarateMaze();
+            //labiryntGenerator = new LabiryntGenerator(3, 3, Content);
+            //labiryntGenerator.genarateMaze();
+            
         }
 
         public void LoadContent(ContentManager Content)
@@ -49,11 +58,12 @@ namespace TopDownShooter
             {
                 item.SpawnItem("Pistol", "Pistol", new Vector2(100, 200), 0, Content, 30, 30, 1);
                 start = false;
+                
             }
-
+            
             prevKbState = kbState;
             kbState = Keyboard.GetState();
-
+            
             if (kbState.IsKeyDown(Keys.D1)) //&& kbState.IsKeyUp(Keys.Q))
             {
                 inventoryManager.inventory.ElementAt(0).justChanged = true;
@@ -196,36 +206,97 @@ namespace TopDownShooter
             }
 
             
-            //Po nacisnieciu przyciskow zmieniaja sie pokoje
-            if (kbState.IsKeyDown(Keys.L))
-            {
-                labiryntGenerator.rooms[0, 0].isVisible = true;
-                labiryntGenerator.rooms[0, 0].ChangePlayerPosition(player);
-                labiryntGenerator.rooms[0, 0].CheckDoorNumber(Content);
-               // roomGenerator.rooms.ElementAt(1).isVisible = false;
-            }
-            /*
-            if (kbState.IsKeyDown(Keys.M))
-            {
-                roomGenerator.rooms.ElementAt(0).isVisible = false;
-                roomGenerator.rooms.ElementAt(1).isVisible = true;
-                roomGenerator.rooms.ElementAt(1).ChangePlayerPosition(player);
-            }
-            */
             
-            foreach(Room room in labiryntGenerator.rooms)
+            
+            //Po nacisnieciu przyciskow zmieniaja sie pokoje
+            if(isColidingWithDoor2 && kbState.IsKeyDown(Keys.E) && prevKbState.IsKeyUp(Keys.E))
             {
-                room.Update(gameTime, player,Content);
+                isColidingWithDoor2 = false;
+                X--;
+                labiryntGenerator.rooms[X, Y].ChangePlayerPosition(player, 0);
+                
+            }
+            if (isColidingWithDoor0 && kbState.IsKeyDown(Keys.E) && prevKbState.IsKeyUp(Keys.E))
+            {
+                X++;
+                labiryntGenerator.rooms[X, Y].ChangePlayerPosition(player, 2);
+            }
+            if (isColidingWithDoor1 && kbState.IsKeyDown(Keys.E) && prevKbState.IsKeyUp(Keys.E))
+            {
+                Y--;
+                labiryntGenerator.rooms[X, Y].ChangePlayerPosition(player, 3);
+            }
+            if (isColidingWithDoor3 && kbState.IsKeyDown(Keys.E) && prevKbState.IsKeyUp(Keys.E))
+            {
+                Y++;
+                labiryntGenerator.rooms[X, Y].ChangePlayerPosition(player, 1);
+            }
+
+            isColidingWithDoor0 = false;
+            isColidingWithDoor1 = false;
+            isColidingWithDoor2 = false;
+            isColidingWithDoor3 = false;
+            /*
+            if (kbState.IsKeyDown(Keys.I) && prevKbState.IsKeyUp(Keys.I))
+            {
+                X--;
+                labiryntGenerator.rooms[1, 1].ChangePlayerPosition(player);
+            }
+            
+            if (kbState.IsKeyDown(Keys.L) && prevKbState.IsKeyUp(Keys.L))
+            {
+               Y++;
+                labiryntGenerator.rooms[1, 1].ChangePlayerPosition(player);
+            }
+
+            if (kbState.IsKeyDown(Keys.J) && prevKbState.IsKeyUp(Keys.J))
+            {
+                Y--;
+                labiryntGenerator.rooms[1, 1].ChangePlayerPosition(player);
+            }
+            if (kbState.IsKeyDown(Keys.K) && prevKbState.IsKeyUp(Keys.K))
+            {
+                X++;
+                labiryntGenerator.rooms[1, 1].ChangePlayerPosition(player);
+            }
+
+             */
+            labiryntGenerator = new LabiryntGenerator(Content);
+
+            if (labiryntGenerator.rooms[X, Y].isVisible == false)
+            {
+                foreach(Room room in labiryntGenerator.rooms)
+                {
+                    room.isVisible = false;
+                }
+                labiryntGenerator.rooms[X, Y].isVisible = true;
+            }
+                
+
+            foreach (Room room in labiryntGenerator.rooms)
+            {
+                room.Update(gameTime, player,Content,this);
             }
             
             //room.Update(gameTime);
 
         }
 
+        public void UpdateRoomNumber(int newX,int newY)
+        {
+            X = newX;
+            Y = newY;
+        }
+
+        public void UpdateX()
+        {
+            X--;
+        }
         public void Draw(SpriteBatch spriteBatch)
         {
             //room.Draw(spriteBatch);
             //background.DrawBackground(spriteBatch);
+            
             
             foreach (Room room in labiryntGenerator.rooms)
             {

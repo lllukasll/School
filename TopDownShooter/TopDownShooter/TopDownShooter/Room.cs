@@ -16,19 +16,16 @@ namespace TopDownShooter
         //
         Rectangle roomBoundingBox;
         //Pozycja pokoju
-        Vector2 roomPosition;
+        Vector2 roomPosition = new Vector2(0, 0);
         //Miejsce w ktorym gracz rozpoczyna
-        Vector2 playerStartingPoint;
+        Vector2[] playerStartingPoint = new Vector2[4];
         //Czy pokój jest aktualnie widoczny
         public bool isVisible;
-        //Czy gracz koliduje ze ścianami
-        //bool isPlayerColiding;
-        //Vector2 playerActualPosition;
-        List<Door> doors = new List<Door>();
+        public List<Door> doors = new List<Door>();
 
         //Zmienne potrzebne fo generowania labiryntu
         public bool visited = false;
-        int roomType = 0;
+        //int roomType = 0;
         public bool door0 = false;
         public bool door1 = false;
         public bool door2 = false;
@@ -40,26 +37,158 @@ namespace TopDownShooter
         SpriteAnimation torch;
         Vector2 torchPosition;
         */
-
-
+        SpriteFont error;
+        string errorText;
+        public int roomNumber;
         public Room() { }
 
-        public Room(int roomNumber,ContentManager Content,Vector2 RoomPosition)
+        public Room(int RoomNumber,ContentManager Content)
         {
-            roomTexture = Content.Load<Texture2D>("Room" + Convert.ToString(roomNumber));
-            playerStartingPoint = new Vector2(320, 410);
-            CheckDoorNumber(Content);
-            roomPosition = RoomPosition;
-            //isPlayerColiding = false;
-            roomBoundingBox = new Rectangle((int)roomPosition.X + 64, (int)roomPosition.Y + 64, roomTexture.Width - 128, roomTexture.Height - 128);
+            roomTexture = Content.Load<Texture2D>("Rooms/Room" + Convert.ToString(RoomNumber));
+            roomNumber = RoomNumber;
+            CheckHowManyDoors(Content);
+            playerStartingPoint[0] = new Vector2(330, 410);
+            playerStartingPoint[1] = new Vector2(110, 260);
+            playerStartingPoint[2] = new Vector2(325, 100);
+            playerStartingPoint[3] = new Vector2(520, 260);
             isVisible = false;
+            error = Content.Load<SpriteFont>("ErrorInformation");
         }
+        
 
-        public void ChangePlayerPosition(Player player)
+        public void CheckHowManyDoors(ContentManager Content)
         {
-            player.ChangePosition(playerStartingPoint);
+            if (roomNumber == 1)
+            {
+                Door door = new Door(2, Content);
+                doors.Add(door);
+            }
+
+            if(roomNumber==2)
+            {
+                Door door = new Door(3, Content);
+                doors.Add(door);
+            }
+
+            if (roomNumber == 3)
+            {
+                Door door = new Door(0, Content);
+                doors.Add(door);
+            }
+
+            if (roomNumber == 4)
+            {
+                Door door = new Door(1, Content);
+                doors.Add(door);
+            }
+
+            if (roomNumber == 5)
+            {
+                Door door = new Door(0, Content);
+                doors.Add(door);
+                door = new Door(3, Content);
+                doors.Add(door);
+            }
+
+            if (roomNumber == 6)
+            {
+                Door door = new Door(0, Content);
+                doors.Add(door);
+                door = new Door(1, Content);
+                doors.Add(door);
+            }
+
+            if (roomNumber == 7)
+            {
+                Door door = new Door(1, Content);
+                doors.Add(door);
+                door = new Door(2, Content);
+                doors.Add(door);
+            }
+
+            if (roomNumber == 8)
+            {
+                Door door = new Door(2, Content);
+                doors.Add(door);
+                door = new Door(3, Content);
+                doors.Add(door);
+            }
+
+            if (roomNumber == 9)
+            {
+                Door door = new Door(0, Content);
+                doors.Add(door);
+                door = new Door(2, Content);
+                doors.Add(door);
+            }
+
+            if (roomNumber == 10)
+            {
+                Door door = new Door(1, Content);
+                doors.Add(door);
+                door = new Door(3, Content);
+                doors.Add(door);
+            }
+
+            if (roomNumber == 11)
+            {
+                Door door = new Door(0, Content);
+                doors.Add(door);
+                door = new Door(1, Content);
+                doors.Add(door);
+                door = new Door(2, Content);
+                doors.Add(door);
+            }
+
+            if (roomNumber == 12)
+            {
+                Door door = new Door(1, Content);
+                doors.Add(door);
+                door = new Door(2, Content);
+                doors.Add(door);
+                door = new Door(3, Content);
+                doors.Add(door);
+            }
+
+            if (roomNumber == 13)
+            {
+                Door door = new Door(0, Content);
+                doors.Add(door);
+                door = new Door(2, Content);
+                doors.Add(door);
+                door = new Door(3, Content);
+                doors.Add(door);
+            }
+
+            if (roomNumber == 14)
+            {
+                Door door = new Door(0, Content);
+                doors.Add(door);
+                door = new Door(1, Content);
+                doors.Add(door);
+                door = new Door(3, Content);
+                doors.Add(door);
+            }
+
+            if (roomNumber == 15)
+            {
+                Door door = new Door(0, Content);
+                doors.Add(door);
+                door = new Door(1, Content);
+                doors.Add(door);
+                door = new Door(2, Content);
+                doors.Add(door);
+                door = new Door(3, Content);
+                doors.Add(door);
+            }
+        }
+        
+        public void ChangePlayerPosition(Player player,int doorNumber)
+        {
+            player.ChangePosition(playerStartingPoint[doorNumber]);
         }
 
+        /*
         public void CheckDoorNumber(ContentManager Content)
         {
             if(door0)
@@ -83,7 +212,8 @@ namespace TopDownShooter
                 doors.Add(door);
             }
         }
-
+        */
+        /*
         void CheckDoors(ContentManager Content)
         {
             if(door0)
@@ -138,8 +268,14 @@ namespace TopDownShooter
             {
                 roomTexture = Content.Load<Texture2D>("Rooms/Room2");
             }
+            else
+            {
+                roomTexture = Content.Load<Texture2D>("Rooms/Room0");
+            }
         }
 
+        */
+        
         public void Initialize()
         {
             /*
@@ -160,12 +296,14 @@ namespace TopDownShooter
             */
         }
 
-        public void Update(GameTime gameTime,Player player,ContentManager Content)
+        public void Update(GameTime gameTime,Player player,ContentManager Content,LevelManager level)
         {
-            CheckDoors(Content);
+            errorText = "Door0 : " + Convert.ToString(door0) + "Door1 : " + Convert.ToString(door1) + "Door2 : " + Convert.ToString(door2) + "Door3 : " + Convert.ToString(door3);
+            //CheckDoorNumber(Content);
+            roomBoundingBox = new Rectangle((int)roomPosition.X + 64, (int)roomPosition.Y + 64, roomTexture.Width - 128, roomTexture.Height - 128);
             foreach (Door door in doors)
             {
-                door.Update(gameTime, player);
+                door.Update(gameTime, player,level);
             }
 
             WallColission(player);
@@ -178,14 +316,17 @@ namespace TopDownShooter
         {
             if(isVisible)
             {
+                
                 spriteBatch.Draw(roomTexture, new Vector2(0, 0), Color.White);
+                
+                //spriteBatch.DrawString(error, errorText, new Vector2(0, 0), Color.White);
                 foreach (Door door in doors)
                 {
                     door.Draw(spriteBatch);
                 }
-            }
                 
-            //torch.Draw(spriteBatch);
+            }
+
         }
 
         public void WallColission(Player player)
