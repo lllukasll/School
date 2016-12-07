@@ -27,5 +27,14 @@ namespace TopDownShooter
             transform = Matrix.CreateScale(new Vector3(1, 1, 0)) *
                 Matrix.CreateTranslation(new Vector3(-centre.X, -centre.Y, 0));
         }
+
+        public void UpdateCamera(GameTime gameTime, Vector2 Position,SpriteFont Font, string text, float ScreenWidth, float ScreenHeight)
+        {
+            centre = new Vector2(Position.X + (Font.MeasureString(text).X/2) - ScreenWidth / 2,
+                Position.Y + (Font.MeasureString(text).Y / 2) - ScreenHeight / 2);
+            transform = Matrix.CreateScale(new Vector3(1, 1, 0)) *
+                Matrix.CreateTranslation(new Vector3(-centre.X, -centre.Y, 0));
+        }
+
     }
 }

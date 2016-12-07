@@ -151,7 +151,11 @@ namespace TopDownShooter
 
             //Jeżeli hp mniej lub rowne zero to postac staje sie niewidoczna
             if (hp <= 0)
+            {
                 isVisible = false;
+                player.AddScore(50);
+            }
+                
 
             character.Update(gameTime);
         }

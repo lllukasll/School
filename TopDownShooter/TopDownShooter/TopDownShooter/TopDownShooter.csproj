@@ -101,7 +101,6 @@
     <Content Include="GameThumbnail.png">
       <XnaPlatformSpecific>true</XnaPlatformSpecific>
     </Content>
-    <Content Include="Room3.png" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TopDownShooterContent\TopDownShooterContent.contentproj">

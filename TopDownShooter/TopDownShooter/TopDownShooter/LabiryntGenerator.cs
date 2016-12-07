@@ -13,54 +13,225 @@ namespace TopDownShooter
     {
         public Room[,] rooms;
         public int sizeX, sizeY;
-        //public int number = 1;
+        int activeRoomX;
+        int activeRoomY;
 
-        public LabiryntGenerator(ContentManager Content)
+        public bool roomActivated = true;
+
+        public LabiryntGenerator() { }
+     
+        public void Maze1(ContentManager Content,LevelManager level)
         {
-            /*
-            sizeX = ileKolumn;
-            sizeY = ileWierszy;
-            rooms = new Room[sizeY, sizeX];
-
-            for(int i = 0; i<sizeY;i++)
+            rooms = new Room[5, 5];
+            int[,] tab = new int[,]
             {
-                for(int j=0;j<sizeX;j++)
+                {3,5,14,10,6 },
+                {8,11,13,4,9 },
+                {5,7,1,2,11 },
+                {13,10,14,14,7 },
+                {8,4,1,8,4 }
+            };
+
+            roomsStructure(tab, 5, 5, Content);
+
+            if(tab[activeRoomX,activeRoomY]==1)
+            {
+                if (roomActivated)
                 {
-                    rooms[i, j] = new Room(0,Content);
+                    roomActivated = false;
                 }
+                if (level.enemy.fatsos.Count < 1 && level.enemy.crows.Count < 1 && level.enemy.roots.Count < 1 && level.enemy.zombies.Count < 1)
+                    rooms[activeRoomX, activeRoomY].enemyKilled = true;
+            }
+            
+            if (tab[activeRoomX, activeRoomY] == 6)
+            {
+                if (roomActivated)
+                {
+
+                    level.enemy.SpawnZombie(300, 110, Content);
+                    level.enemy.SpawnCrow(200, 220, Content);
+                    level.enemy.SpawnRoot(100, 300, Content);
+                    level.enemy.SpawnRoot(400, 350, Content);
+                    level.enemy.SpawnRoot(500, 190, Content);
+                    level.enemy.SpawnRoot(300, 200, Content);
+                    level.enemy.SpawnCrow(100, 200, Content);
+                    level.enemy.SpawnCrow(100, 200, Content);
+                    level.enemy.SpawnCrow(400, 160, Content);
+                    roomActivated = false;
+                }
+                if (level.enemy.fatsos.Count < 1 && level.enemy.crows.Count < 1 && level.enemy.roots.Count < 1 && level.enemy.zombies.Count < 1)
+                    rooms[activeRoomX, activeRoomY].enemyKilled = true;
+            }
+            if (tab[activeRoomX, activeRoomY] == 9)
+            {
+                if (roomActivated)
+                {
+
+                    level.enemy.SpawnZombie(300, 110, Content);
+                    level.enemy.SpawnZombie(200, 220, Content);
+                    level.enemy.SpawnRoot(100, 300, Content);
+                    level.enemy.SpawnRoot(400, 350, Content);
+                    level.enemy.SpawnFatso(500, 190, Content);
+                    level.enemy.SpawnFatso(300, 200, Content);
+                    level.enemy.SpawnCrow(100, 200, Content);
+                    level.enemy.SpawnCrow(100, 200, Content);
+                    level.enemy.SpawnCrow(400, 160, Content);
+                    roomActivated = false;
+                }
+                if (level.enemy.fatsos.Count < 1 && level.enemy.crows.Count < 1 && level.enemy.roots.Count < 1 && level.enemy.zombies.Count < 1)
+                    rooms[activeRoomX, activeRoomY].enemyKilled = true;
+            }
+            if (tab[activeRoomX, activeRoomY] == 5)
+            {
+                if (roomActivated)
+                {
+
+                    level.enemy.SpawnZombie(300, 110, Content);
+                    level.enemy.SpawnZombie(200, 220, Content);
+                    level.enemy.SpawnZombie(100, 300, Content);
+                    level.enemy.SpawnZombie(400, 350, Content);
+                    level.enemy.SpawnFatso(500, 190, Content);
+                    level.enemy.SpawnFatso(300, 200, Content);
+                    level.enemy.SpawnFatso(100, 200, Content);
+                    roomActivated = false;
+                }
+                if (level.enemy.fatsos.Count < 1 && level.enemy.crows.Count < 1 && level.enemy.roots.Count < 1 && level.enemy.zombies.Count < 1)
+                    rooms[activeRoomX, activeRoomY].enemyKilled = true;
+            }
+            if (tab[activeRoomX, activeRoomY] == 2)
+            {
+                if (roomActivated)
+                {
+                    
+                    level.enemy.SpawnZombie(300, 110, Content);
+                    level.enemy.SpawnZombie(200, 220, Content);
+                    level.enemy.SpawnZombie(100, 300, Content);
+                    level.enemy.SpawnZombie(400, 350, Content);
+                    level.enemy.SpawnZombie(500, 190, Content);
+                    level.enemy.SpawnZombie(300, 200, Content);
+                    roomActivated = false;
+                }
+                if (level.enemy.fatsos.Count < 1 && level.enemy.crows.Count < 1 && level.enemy.roots.Count < 1 && level.enemy.zombies.Count < 1)
+                    rooms[activeRoomX, activeRoomY].enemyKilled = true;
+            }
+            if (tab[activeRoomX, activeRoomY] == 11)
+            {
+                if (roomActivated)
+                {
+                    level.enemy.SpawnRoot(130, 100, Content);
+                    level.enemy.SpawnFatso(500, 200, Content);
+                    level.enemy.SpawnZombie(300, 300, Content);
+                    level.enemy.SpawnCrow(400, 150, Content);
+                    level.enemy.SpawnCrow(320, 120, Content);
+                    level.enemy.SpawnFatso(500, 300, Content);
+                    roomActivated = false;
+                }
+                if (level.enemy.fatsos.Count < 1 && level.enemy.crows.Count < 1 && level.enemy.roots.Count < 1 && level.enemy.zombies.Count < 1)
+                    rooms[activeRoomX, activeRoomY].enemyKilled = true;
+            }
+            if (tab[activeRoomX, activeRoomY] == 4)
+            {
+                if (roomActivated)
+                {
+                    level.enemy.SpawnRoot(130, 100, Content);
+                    level.enemy.SpawnRoot(500, 200, Content);
+                    level.enemy.SpawnRoot(300, 300, Content);
+                    level.enemy.SpawnRoot(400, 150, Content);
+                    level.enemy.SpawnRoot(320, 120, Content);
+                   
+                    roomActivated = false;
+                }
+                if (level.enemy.fatsos.Count < 1 && level.enemy.crows.Count < 1 && level.enemy.roots.Count < 1 && level.enemy.zombies.Count < 1)
+                    rooms[activeRoomX, activeRoomY].enemyKilled = true;
+            }
+            if (tab[activeRoomX, activeRoomY] == 13)
+            {
+                if (roomActivated)
+                {
+                    level.enemy.SpawnCrow(130, 100, Content);
+                    level.enemy.SpawnCrow(500, 200, Content);
+                    level.enemy.SpawnCrow(300, 300, Content);
+                    level.enemy.SpawnCrow(400, 150, Content);
+                    level.enemy.SpawnCrow(320, 120, Content);
+                    level.enemy.SpawnCrow(300, 110, Content);
+                    level.enemy.SpawnCrow(370, 100, Content);
+                    level.enemy.SpawnCrow(123, 180, Content);
+                    level.enemy.SpawnCrow(390, 220, Content);
+                    level.enemy.SpawnCrow(100, 100, Content);
+                    roomActivated = false;
+                }
+                if (level.enemy.fatsos.Count < 1 && level.enemy.crows.Count < 1 && level.enemy.roots.Count < 1 && level.enemy.zombies.Count < 1)
+                    rooms[activeRoomX, activeRoomY].enemyKilled = true;
             }
 
-            //number = 1;*/
-            rooms = new Room[5, 5];
-            int[,] tab = new int[,]
+            if (tab[activeRoomX, activeRoomY] == 14)
             {
-                {3,5,14,10,6 },
-                {8,11,13,4,9 },
-                {5,7,1,2,11 },
-                {13,10,14,14,7 },
-                {8,4,1,8,4 }
-            };
+                if (roomActivated)
+                {
+                    //rooms[activeRoomX, activeRoomY].enemyKilled = false;
+                    level.enemy.SpawnZombie(100, 100, Content);
+                    level.enemy.SpawnZombie(550, 100, Content);
+                    level.enemy.SpawnCrow(130, 100, Content);
+                    level.enemy.SpawnCrow(500, 100, Content);
+                    level.enemy.SpawnCrow(300, 100, Content);
+                    roomActivated = false;
+                }
+                if (level.enemy.fatsos.Count < 1 && level.enemy.crows.Count < 1 && level.enemy.roots.Count < 1 && level.enemy.zombies.Count < 1)
+                    rooms[activeRoomX, activeRoomY].enemyKilled = true;
+            }
 
-            roomsStructure(tab, 5, 5, Content);
+            if (tab[activeRoomX, activeRoomY] == 10)
+            {
+                if (roomActivated)
+                {
+                    //rooms[activeRoomX, activeRoomY].enemyKilled = false;
+                    level.enemy.SpawnFatso(100, 100, Content);
+                    level.enemy.SpawnFatso(550, 100, Content);
+                    level.enemy.SpawnCrow(130, 100, Content);
+                    level.enemy.SpawnCrow(500, 100, Content);
+                    roomActivated = false;
+                }
+                if (level.enemy.fatsos.Count < 1 && level.enemy.crows.Count < 1 && level.enemy.roots.Count < 1 && level.enemy.zombies.Count < 1)
+                    rooms[activeRoomX, activeRoomY].enemyKilled = true;
+            }
+            if (tab[activeRoomX, activeRoomY] == 7)
+            {
+                if (roomActivated)
+                {
+                    //rooms[activeRoomX, activeRoomY].enemyKilled = false;
+                    level.enemy.SpawnFatso(100, 100, Content);
+                    level.enemy.SpawnFatso(550, 100, Content);
+                    level.enemy.SpawnFatso(550, 100, Content);
+                    level.enemy.SpawnCrow(500, 100, Content);
+                    roomActivated = false;
+                }
+                if (level.enemy.fatsos.Count < 1 && level.enemy.crows.Count < 1 && level.enemy.roots.Count < 1 && level.enemy.zombies.Count < 1)
+                    rooms[activeRoomX, activeRoomY].enemyKilled = true;
+            }
+            if (tab[activeRoomX, activeRoomY] == 8)
+            {
+                if (roomActivated)
+                {
+                    //rooms[activeRoomX, activeRoomY].enemyKilled = false;
+                    level.enemy.SpawnFatso(100, 400, Content);
+                    level.enemy.SpawnFatso(550, 400, Content);
+                    level.enemy.SpawnFatso(550, 400, Content);
+                    level.enemy.SpawnRoot(500, 400, Content);
+                    level.enemy.SpawnRoot(300, 400, Content);
+                    roomActivated = false;
+                }
+                if (level.enemy.fatsos.Count < 1 && level.enemy.crows.Count < 1 && level.enemy.roots.Count < 1 && level.enemy.zombies.Count < 1)
+                    rooms[activeRoomX, activeRoomY].enemyKilled = true;
+            }
+
         }
 
-        
-        public void Maze1(ContentManager Content)
+        public void activeRoom(int X,int Y)
         {
-            rooms = new Room[5, 5];
-            int[,] tab = new int[,]
-            {
-                {3,5,14,10,6 },
-                {8,11,13,4,9 },
-                {5,7,1,2,11 },
-                {13,10,14,14,7 },
-                {8,4,1,8,4 }
-            };
-
-            roomsStructure(tab, 5, 5, Content);
+            activeRoomX = X;
+            activeRoomY = Y;
         }
-
-
 
         public void roomsStructure(int[,] tab,int maxX,int maxY,ContentManager Content)
         {

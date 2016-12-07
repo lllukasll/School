@@ -31,14 +31,14 @@ namespace TopDownShooter
         public bool door2 = false;
         public bool door3 = false;
 
-
+        public bool enemyKilled = false;
         /*
         Texture2D torchTexture;
         SpriteAnimation torch;
         Vector2 torchPosition;
         */
         SpriteFont error;
-        string errorText;
+        //string errorText;
         public int roomNumber;
         public Room() { }
 
@@ -52,9 +52,64 @@ namespace TopDownShooter
             playerStartingPoint[2] = new Vector2(325, 100);
             playerStartingPoint[3] = new Vector2(520, 260);
             isVisible = false;
-            error = Content.Load<SpriteFont>("ErrorInformation");
+            //error = Content.Load<SpriteFont>("ErrorInformation");
         }
-        
+
+
+        public void ChangePlayerPosition(Player player,int doorNumber)
+        {
+            player.ChangePosition(playerStartingPoint[doorNumber]);
+        }
+
+        public void Initialize()
+        {
+            /*
+            torchPosition = new Vector2(200, 100);
+            torch.Animation = "torchAnimation";
+            torch.Position = torchPosition;
+            */
+        }
+
+        public void LoadContent(ContentManager Content)
+        {
+            /*
+            roomTexture = Content.Load<Texture2D>("Room2");
+            torchTexture = Content.Load<Texture2D>("Torch");
+            torch = new SpriteAnimation(torchTexture, 5, 1);
+            AnimationClass ani = new AnimationClass();
+            torch.AddAnimation("torchAnimation", 1, 5, ani.Copy());
+            */
+        }
+
+        public void Update(GameTime gameTime,Player player,ContentManager Content,LevelManager level)
+        {
+            roomBoundingBox = new Rectangle((int)roomPosition.X + 64, (int)roomPosition.Y + 64, roomTexture.Width - 128, roomTexture.Height - 128);
+            if(isVisible)
+                foreach (Door door in doors)
+                {
+                    door.Update(gameTime, player,level);
+                }
+
+            WallColission(player);
+            /*
+            torch.Update(gameTime);
+            */
+        }
+
+        public void Draw(SpriteBatch spriteBatch)
+        {
+            if(isVisible)
+            {
+                
+                spriteBatch.Draw(roomTexture, new Vector2(0, 0), Color.White);
+                foreach (Door door in doors)
+                {
+                    door.Draw(spriteBatch);
+                }
+                
+            }
+
+        }
 
         public void CheckHowManyDoors(ContentManager Content)
         {
@@ -64,7 +119,7 @@ namespace TopDownShooter
                 doors.Add(door);
             }
 
-            if(roomNumber==2)
+            if (roomNumber == 2)
             {
                 Door door = new Door(3, Content);
                 doors.Add(door);
@@ -181,152 +236,6 @@ namespace TopDownShooter
                 door = new Door(3, Content);
                 doors.Add(door);
             }
-        }
-        
-        public void ChangePlayerPosition(Player player,int doorNumber)
-        {
-            player.ChangePosition(playerStartingPoint[doorNumber]);
-        }
-
-        /*
-        public void CheckDoorNumber(ContentManager Content)
-        {
-            if(door0)
-            {
-                Door door = new Door(0, Content);
-                doors.Add(door);
-            }
-            if(door1)
-            {
-                Door door = new Door(1, Content);
-                doors.Add(door);
-            }
-            if (door2)
-            {
-                Door door = new Door(2, Content);
-                doors.Add(door);
-            }
-            if (door3)
-            {
-                Door door = new Door(3, Content);
-                doors.Add(door);
-            }
-        }
-        */
-        /*
-        void CheckDoors(ContentManager Content)
-        {
-            if(door0)
-            {
-                roomTexture = Content.Load<Texture2D>("Rooms/Room3");
-                if(door1)
-                {
-                    roomTexture = Content.Load<Texture2D>("Rooms/Room6");
-                    if(door2)
-                    {
-                        roomTexture = Content.Load < Texture2D>("Rooms/Room11");
-                        if (door3)
-                        {
-                            roomTexture = Content.Load<Texture2D>("Rooms/Room15");
-                        }
-                            
-                    }
-                }else if(door2)
-                {
-                    roomTexture = Content.Load<Texture2D>("Rooms/Room9");
-                    if(door3)
-                    {
-                        roomTexture = Content.Load<Texture2D>("Rooms/Room13");
-                    }
-                }else if(door3)
-                {
-                    roomTexture = Content.Load<Texture2D>("Rooms/Room5");
-                }
-            }else if(door1)
-            {
-                roomTexture = Content.Load<Texture2D>("Rooms/Room4");
-                if(door2)
-                {
-                    roomTexture = Content.Load<Texture2D>("Rooms/Room7");
-                    if(door3)
-                    {
-                        roomTexture = Content.Load<Texture2D>("Rooms/Room12");
-                    }
-                }
-                else if(door3)
-                {
-                    roomTexture = Content.Load<Texture2D>("Rooms/Room10");
-                }
-            }else if(door2)
-            {
-                roomTexture = Content.Load<Texture2D>("Rooms/Room1");
-                if(door3)
-                {
-                    roomTexture = Content.Load<Texture2D>("Rooms/Room8");
-                }
-            }else if(door3)
-            {
-                roomTexture = Content.Load<Texture2D>("Rooms/Room2");
-            }
-            else
-            {
-                roomTexture = Content.Load<Texture2D>("Rooms/Room0");
-            }
-        }
-
-        */
-        
-        public void Initialize()
-        {
-            /*
-            torchPosition = new Vector2(200, 100);
-            torch.Animation = "torchAnimation";
-            torch.Position = torchPosition;
-            */
-        }
-
-        public void LoadContent(ContentManager Content)
-        {
-            /*
-            roomTexture = Content.Load<Texture2D>("Room2");
-            torchTexture = Content.Load<Texture2D>("Torch");
-            torch = new SpriteAnimation(torchTexture, 5, 1);
-            AnimationClass ani = new AnimationClass();
-            torch.AddAnimation("torchAnimation", 1, 5, ani.Copy());
-            */
-        }
-
-        public void Update(GameTime gameTime,Player player,ContentManager Content,LevelManager level)
-        {
-            errorText = "Door0 : " + Convert.ToString(door0) + "Door1 : " + Convert.ToString(door1) + "Door2 : " + Convert.ToString(door2) + "Door3 : " + Convert.ToString(door3);
-            //CheckDoorNumber(Content);
-            roomBoundingBox = new Rectangle((int)roomPosition.X + 64, (int)roomPosition.Y + 64, roomTexture.Width - 128, roomTexture.Height - 128);
-            foreach (Door door in doors)
-            {
-                door.Update(gameTime, player,level);
-            }
-
-            WallColission(player);
-            /*
-            torch.Update(gameTime);
-            */
-        }
-
-        public void Draw(SpriteBatch spriteBatch)
-        {
-            if(isVisible)
-            {
-                
-                spriteBatch.Draw(roomTexture, new Vector2(0, 0), Color.White);
-                
-                //spriteBatch.DrawString(error, errorText, new Vector2(0, 0), Color.White);
-                foreach (Door door in doors)
-                {
-                    door.Draw(spriteBatch);
-                }
-                
-            }
-
         }
 
         public void WallColission(Player player)

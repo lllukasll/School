@@ -72,21 +72,18 @@ namespace TopDownShooter
                         level.isColidingWithDoor1 = false;
                         level.isColidingWithDoor2 = false;
                         level.isColidingWithDoor3 = false;
-                        level.UpdateRoomNumber(level.X++, level.Y);
                     }else if(doorNumber==1)
                     {
                         level.isColidingWithDoor0 = false;
                         level.isColidingWithDoor1 = true;
                         level.isColidingWithDoor2 = false;
                         level.isColidingWithDoor3 = false;
-                        level.UpdateRoomNumber(level.X, level.Y--);
                     }else if (doorNumber == 2)
                     {
                         level.isColidingWithDoor0 = false;
                         level.isColidingWithDoor1 = false;
                         level.isColidingWithDoor2 = true;
                         level.isColidingWithDoor3 = false;
-                        level.UpdateRoomNumber(level.X--, level.Y);
                 }
                 else if (doorNumber == 3)
                     {
@@ -94,7 +91,6 @@ namespace TopDownShooter
                         level.isColidingWithDoor1 = false;
                         level.isColidingWithDoor2 = false;
                         level.isColidingWithDoor3 = true;
-                        level.UpdateRoomNumber(level.X, level.Y++);
                     }
                 }else
                 {
