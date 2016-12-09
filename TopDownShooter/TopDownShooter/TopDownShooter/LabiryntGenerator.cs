@@ -27,7 +27,7 @@ namespace TopDownShooter
             int[,] tab = new int[,]
             {
                 {3,5,14,10,6 },
-                {8,11,13,20,9 },
+                {2,11,13,20,9 },
                 {5,7,1,2,11 },
                 {13,10,14,14,7 },
                 {8,4,1,8,4 }
@@ -44,7 +44,7 @@ namespace TopDownShooter
                 if (level.enemy.fatsos.Count < 1 && level.enemy.crows.Count < 1 && level.enemy.roots.Count < 1 && level.enemy.zombies.Count < 1)
                     rooms[activeRoomX, activeRoomY].enemyKilled = true;
             }
-            
+
             if (tab[activeRoomX, activeRoomY] == 6)
             {
                 if (roomActivated)
