@@ -92,7 +92,7 @@ namespace TopDownShooter
                 this.Exit();
 
             
-            levelManager.Update(gameTime, Content,ScreenSize,this);
+            levelManager.Update(gameTime, Content,ScreenSize,this,ScreenSize);
             camera.Update(gameTime, levelManager.player,ScreenSize.X,ScreenSize.Y);
             base.Update(gameTime);
         }

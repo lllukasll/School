@@ -144,8 +144,12 @@ namespace TopDownShooter
 
         }
 
-        public void Update(GameTime gameTime, InventoryManager inventoryManager, Vector2 screenSize)
+        public void Update(GameTime gameTime, InventoryManager inventoryManager, Vector2 screenSize,LevelManager level)
         {
+            if(hpScale.X<=0)
+            {
+                level.isGameOverMenuVisible = true;
+            }
             prevPlayerPosition = playerPosition;
 
             //Ustawia położenie itemu aktualnie trzymanego przez gracza 

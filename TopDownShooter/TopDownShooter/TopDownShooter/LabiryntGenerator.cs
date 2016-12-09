@@ -15,6 +15,7 @@ namespace TopDownShooter
         public int sizeX, sizeY;
         int activeRoomX;
         int activeRoomY;
+        
 
         public bool roomActivated = true;
 
@@ -26,7 +27,7 @@ namespace TopDownShooter
             int[,] tab = new int[,]
             {
                 {3,5,14,10,6 },
-                {8,11,13,4,9 },
+                {8,11,13,20,9 },
                 {5,7,1,2,11 },
                 {13,10,14,14,7 },
                 {8,4,1,8,4 }

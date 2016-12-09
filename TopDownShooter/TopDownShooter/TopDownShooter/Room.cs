@@ -40,6 +40,19 @@ namespace TopDownShooter
         SpriteFont error;
         //string errorText;
         public int roomNumber;
+
+        //Wyjscie z labiryntu
+        Texture2D ladderTexture;
+        Vector2 ladderPosition;
+        Rectangle ladderBoundingBox;
+        bool isLadderVisible = false;
+        SpriteFont wyjdzZLabiryntuFont;
+        string wyjdzZLabiryntuString = "Aby wyjsc z labiryntu nacisnij E";
+        Vector2 wyjdzZLAbiryntuStringPosition;
+        Color wyjdzZLabiryntuColor = Color.White;
+        bool isStringVisible = false;
+        KeyboardState kbState, prevKbState;
+
         public Room() { }
 
         public Room(int RoomNumber,ContentManager Content)
@@ -83,6 +96,35 @@ namespace TopDownShooter
 
         public void Update(GameTime gameTime,Player player,ContentManager Content,LevelManager level)
         {
+            if (roomNumber == 20 && isVisible)
+                isLadderVisible = true;
+            else
+                isLadderVisible = false;
+
+            prevKbState = kbState;
+
+            kbState = Keyboard.GetState();
+
+            if(isLadderVisible)
+            {
+                ladderTexture = Content.Load<Texture2D>("Ladder");
+                ladderPosition = new Vector2(300, 200);
+                ladderBoundingBox = new Rectangle((int)ladderPosition.X, (int)ladderPosition.Y, ladderTexture.Width, ladderTexture.Height);
+                wyjdzZLabiryntuFont = Content.Load<SpriteFont>("Fonts/WyjdzZLabiryntuFont");
+                wyjdzZLAbiryntuStringPosition = new Vector2(ladderPosition.X - 20, ladderPosition.Y - 20);
+
+                if (ladderBoundingBox.Intersects(player.boundingBox))
+                {
+                    isStringVisible = true;
+                    if (kbState.IsKeyDown(Keys.E))
+                    {
+                        level.isCongratulationsVisible = true;
+                    }
+                }
+                else
+                    isStringVisible = false;
+            }
+
             roomBoundingBox = new Rectangle((int)roomPosition.X + 64, (int)roomPosition.Y + 64, roomTexture.Width - 128, roomTexture.Height - 128);
             if(isVisible)
                 foreach (Door door in doors)
@@ -106,7 +148,11 @@ namespace TopDownShooter
                 {
                     door.Draw(spriteBatch);
                 }
-                
+                if (isLadderVisible)
+                    spriteBatch.Draw(ladderTexture, ladderPosition, Color.White);
+                if (isStringVisible)
+                    spriteBatch.DrawString(wyjdzZLabiryntuFont, wyjdzZLabiryntuString, wyjdzZLAbiryntuStringPosition, wyjdzZLabiryntuColor);
+
             }
 
         }

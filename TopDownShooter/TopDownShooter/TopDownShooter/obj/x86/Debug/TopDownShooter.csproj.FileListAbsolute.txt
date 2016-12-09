@@ -59,3 +59,10 @@ C:\Users\GTX\Desktop\GitHub\School\TopDownShooter\TopDownShooter\TopDownShooter\
 C:\Users\GTX\Desktop\GitHub\School\TopDownShooter\TopDownShooter\TopDownShooter\bin\x86\Debug\Content\Fonts\EscapeFont.xnb
 C:\Users\GTX\Desktop\GitHub\School\TopDownShooter\TopDownShooter\TopDownShooter\bin\x86\Debug\Content\Fonts\InstructionsFont.xnb
 C:\Users\GTX\Desktop\GitHub\School\TopDownShooter\TopDownShooter\TopDownShooter\bin\x86\Debug\Content\Crow.xnb
+C:\Users\GTX\Desktop\GitHub\School\TopDownShooter\TopDownShooter\TopDownShooter\bin\x86\Debug\Content\Fonts\GameOverFont.xnb
+C:\Users\GTX\Desktop\GitHub\School\TopDownShooter\TopDownShooter\TopDownShooter\bin\x86\Debug\Content\Fonts\BackToMenu.xnb
+C:\Users\GTX\Desktop\GitHub\School\TopDownShooter\TopDownShooter\TopDownShooter\bin\x86\Debug\Content\Fonts\InstructionsTextFont.xnb
+C:\Users\GTX\Desktop\GitHub\School\TopDownShooter\TopDownShooter\TopDownShooter\bin\x86\Debug\Content\Ladder.xnb
+C:\Users\GTX\Desktop\GitHub\School\TopDownShooter\TopDownShooter\TopDownShooter\bin\x86\Debug\Content\Rooms\Room20.xnb
+C:\Users\GTX\Desktop\GitHub\School\TopDownShooter\TopDownShooter\TopDownShooter\bin\x86\Debug\Content\Fonts\WyjdzZLabiryntuFont.xnb
+C:\Users\GTX\Desktop\GitHub\School\TopDownShooter\TopDownShooter\TopDownShooter\bin\x86\Debug\Content\Fonts\CongratulationsFont.xnb

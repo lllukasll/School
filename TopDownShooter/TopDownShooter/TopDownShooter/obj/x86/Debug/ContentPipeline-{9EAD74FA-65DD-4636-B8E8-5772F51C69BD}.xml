@@ -406,6 +406,69 @@
       <Output>C:\Users\GTX\Desktop\GitHub\School\TopDownShooter\TopDownShooter\TopDownShooter\bin\x86\Debug\Content\Crow.xnb</Output>
       <Time>2016-12-07T23:30:06.2758134+01:00</Time>
     </Item>
+    <Item>
+      <Source>Fonts\GameOverFont.spritefont</Source>
+      <Name>Fonts\GameOverFont</Name>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\GTX\Desktop\GitHub\School\TopDownShooter\TopDownShooter\TopDownShooter\bin\x86\Debug\Content\Fonts\GameOverFont.xnb</Output>
+      <Time>2016-12-09T09:52:15.5930642+01:00</Time>
+    </Item>
+    <Item>
+      <Source>Fonts\BackToMenu.spritefont</Source>
+      <Name>Fonts\BackToMenu</Name>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\GTX\Desktop\GitHub\School\TopDownShooter\TopDownShooter\TopDownShooter\bin\x86\Debug\Content\Fonts\BackToMenu.xnb</Output>
+      <Time>2016-12-09T10:11:49.1176118+01:00</Time>
+    </Item>
+    <Item>
+      <Source>Fonts\InstructionsTextFont.spritefont</Source>
+      <Name>Fonts\InstructionsTextFont</Name>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\GTX\Desktop\GitHub\School\TopDownShooter\TopDownShooter\TopDownShooter\bin\x86\Debug\Content\Fonts\InstructionsTextFont.xnb</Output>
+      <Time>2016-12-09T10:22:41.5725567+01:00</Time>
+    </Item>
+    <Item>
+      <Source>Ladder.png</Source>
+      <Name>Ladder</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\GTX\Desktop\GitHub\School\TopDownShooter\TopDownShooter\TopDownShooter\bin\x86\Debug\Content\Ladder.xnb</Output>
+      <Time>2016-12-09T11:06:31.9312862+01:00</Time>
+    </Item>
+    <Item>
+      <Source>Rooms\Room20.png</Source>
+      <Name>Rooms\Room20</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\GTX\Desktop\GitHub\School\TopDownShooter\TopDownShooter\TopDownShooter\bin\x86\Debug\Content\Rooms\Room20.xnb</Output>
+      <Time>2016-12-09T11:11:31.8755304+01:00</Time>
+    </Item>
+    <Item>
+      <Source>Fonts\WyjdzZLabiryntuFont.spritefont</Source>
+      <Name>Fonts\WyjdzZLabiryntuFont</Name>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\GTX\Desktop\GitHub\School\TopDownShooter\TopDownShooter\TopDownShooter\bin\x86\Debug\Content\Fonts\WyjdzZLabiryntuFont.xnb</Output>
+      <Time>2016-12-09T11:16:23.6042472+01:00</Time>
+    </Item>
+    <Item>
+      <Source>Fonts\CongratulationsFont.spritefont</Source>
+      <Name>Fonts\CongratulationsFont</Name>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\GTX\Desktop\GitHub\School\TopDownShooter\TopDownShooter\TopDownShooter\bin\x86\Debug\Content\Fonts\CongratulationsFont.xnb</Output>
+      <Time>2016-12-09T11:25:03.0599186+01:00</Time>
+    </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>
       <ContentProjectGUID>{9EAD74FA-65DD-4636-B8E8-5772F51C69BD}</ContentProjectGUID>
